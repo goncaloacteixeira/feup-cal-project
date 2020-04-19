@@ -5,4 +5,4 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(include/)
 
-add_executable(feup_cal_project main.cpp include/Graph.h include/MutablePriorityQueue.h src/DataImporter.cpp include/DataImporter.h)
+add_executable(feup_cal_project main.cpp include/Graph.h include/MutablePriorityQueue.h src/DataImporter.cpp include/DataImporter.h src/VertexInfo.cpp include/VertexInfo.h)

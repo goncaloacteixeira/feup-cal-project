@@ -9,6 +9,7 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
+#include "VertexInfo.h"
 #include "Graph.h"
 
 using namespace std;
@@ -16,13 +17,16 @@ using namespace std;
 class DataImporter {
     string nodesFilename;
     string edgesFilename;
-    vector<Vertex<int>> nodes;
-    vector<Edge<int>> edges;
+
+    Graph<VertexInfo> graph;
+
+    void parseEdges();
+    void parseNodes();
 
 public:
     DataImporter(const string &nodesFilename, const string &edgesFilename);
 
-    void parseEdges();
+    Graph<VertexInfo>* createGraph();
 
 };
 
