@@ -7,15 +7,21 @@
 
 #include <string>
 #include <vector>
+#include <fstream>
+#include "Graph.h"
 
 using namespace std;
 
 class DataImporter {
     string nodesFilename;
     string edgesFilename;
+    vector<Vertex<int>> nodes;
+    vector<Edge<int>> edges;
 
+public:
+    DataImporter(const string &nodesFilename, const string &edgesFilename);
 
-
+    void parseEdges();
 
 };
 
