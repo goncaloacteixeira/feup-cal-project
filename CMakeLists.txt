@@ -3,4 +3,6 @@ project(feup_cal_project)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(feup_cal_project main.cpp)
+include_directories(include/)
+
+add_executable(feup_cal_project main.cpp include/Graph.h include/MutablePriorityQueue.h src/DataImporter.cpp include/DataImporter.h)
