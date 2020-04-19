@@ -7,7 +7,7 @@ string pt_maps(string s) {
 }
 
 int main() {
-    auto dt = new DataImporter(pt_maps("Porto/edges_porto.txt"), pt_maps("Porto/nodes_x_y_porto.txt"));
+    auto dt = new DataImporter(pt_maps("Porto/nodes_x_y_porto.txt"), pt_maps("Porto/edges_porto.txt"));
     dt->parseEdges();
 
     return 0;

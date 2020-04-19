@@ -16,5 +16,20 @@ void DataImporter::parseEdges() {
         edges.emplace_back(line);
     }
 
+    vector<Edge<int>> vector;
+
+    for (int i = 1; i < stoi(edges[0]) ; ++i) {
+        char unused;
+        int x, y;
+        istringstream ss(edges[i]);
+        ss >> unused;
+        ss >> x;
+        ss >> unused;
+        ss >> y;
+        ss >> unused;
+
+        // TODO - Adicionar Edges aos Vertex
+    }
+
     printf("Hello");
 }

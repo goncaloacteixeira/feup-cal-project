@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include <fstream>
+#include <sstream>
 #include "Graph.h"
 
 using namespace std;
