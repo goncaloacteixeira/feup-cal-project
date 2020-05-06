@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 
 include_directories(src/include)
 include_directories(src/lib)
+include_directories(res)
 
 # The line below is necessary if you are under Windows only
 # Comment the line below if you are under Linux or Mac OS
@@ -14,4 +15,4 @@ add_executable(meetup-rider src/meetupRider.cpp
         src/Carro.cpp src/include/Carro.h
         src/Pessoa.cpp src/include/Pessoa.h
         src/Local.cpp src/include/Local.h
-        src/lib/GraphViewer/connection.cpp src/lib/GraphViewer/graphviewer.cpp)
+        src/lib/GraphViewer/connection.cpp src/lib/GraphViewer/graphviewer.cpp src/DataImporter.cpp src/include/DataImporter.h)

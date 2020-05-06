@@ -12,7 +12,10 @@
  * Guarda as infomações de um Local
  */
 class Local {
+    int id;
     std::string nome; //!< nome do local
+    double x;
+    double y;
 public:
     /**
      * @brief Construtor padrão de Local
@@ -20,11 +23,7 @@ public:
      */
     Local();
 
-    /**
-     * @brief Construtor de Local
-     * @param nome nome do local
-     */
-    Local(const std::string &nome);
+    Local(int id, const std::string &nome, double x, double y);
 
     /**
      * @brief Método GET para o nome
@@ -37,6 +36,12 @@ public:
      * @param nome novo nome do local
      */
     void setNome(const std::string &nome);
+
+    int getId() const;
+
+    double getX() const;
+
+    double getY() const;
 };
 
 

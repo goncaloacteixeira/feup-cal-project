@@ -5,40 +5,27 @@
 #include <iostream>
 
 #include "GraphViewer/graphviewer.h"
+#include "DataImporter.h"
+
+void graphViz4() {
+    DataImporter dataImporter("res/GridGraphs/4x4/nodes.txt", "res/GridGraphs/4x4/edges.txt");
+    dataImporter.viewGraph();
+}
+
+void graphViz8() {
+    DataImporter dataImporter("res/GridGraphs/8x8/nodes.txt", "res/GridGraphs/8x8/edges.txt");
+    dataImporter.viewGraph();
+}
+
+void graphViz16() {
+    DataImporter dataImporter("res/GridGraphs/16x16/nodes.txt", "res/GridGraphs/16x16/edges.txt");
+    dataImporter.viewGraph();
+}
 
 
 int main() {
-    GraphViewer* gv = new GraphViewer(600, 600, true);
-    gv->createWindow(600, 600);
-    gv->defineVertexColor("blue");
-    gv->defineEdgeColor("black");
-
-    gv->addNode(0);
-    gv->addNode(1);
-    gv->rearrange();    // set changes to graphviewer
-
-    gv->addEdge(0, 0, 1, EdgeType::UNDIRECTED); // for undirected edges
-    gv->addEdge(1, 0, 1, EdgeType::DIRECTED);   // for directed edges
-    gv->rearrange();
-
-    gv->removeNode(0);
-    gv->rearrange();
-
-    gv->addNode(2);
-    gv->addEdge(2, 1, 2, EdgeType::UNDIRECTED);
-    gv->rearrange();
-
-    gv->setVertexLabel(2, "This is node 2");
-    gv->setEdgeLabel(2, "This an labeled edge");
-    gv->rearrange();
-
-    gv->setVertexColor(2, "green");
-    gv->setEdgeColor(2, "yellow");
-    gv->rearrange();
-
-    gv->setBackground("background.jpg");
-    gv->rearrange();
-
-    getchar();
+    graphViz4();
+    graphViz8();
+    graphViz16();
 }
 
