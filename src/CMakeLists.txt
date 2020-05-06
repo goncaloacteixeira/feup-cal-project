@@ -12,4 +12,6 @@ link_libraries(ws2_32 wsock32)
 
 add_executable(meetup-rider meetupRider.cpp
         Carro.cpp include/Carro.h
-        Pessoa.cpp include/Pessoa.h Local.cpp include/Local.h)
+        Pessoa.cpp include/Pessoa.h
+        Local.cpp include/Local.h
+        lib/GraphViewer/connection.cpp lib/GraphViewer/graphviewer.cpp)
