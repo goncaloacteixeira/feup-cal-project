@@ -4,8 +4,6 @@
 
 #include <iostream>
 
-#include "GraphViewer/connection.h"
-#include "GraphViewer/edgetype.h"
 #include "GraphViewer/graphviewer.h"
 
 
