@@ -29,8 +29,7 @@ std::vector<Local *> Pessoa::getDestinosFrequentes() const {
 }
 
 
-Condutor::Condutor(const std::string &nome, unsigned int nif, const std::string &email, Carro carro) : Pessoa(nome, nif, email) {
-    this->carro = carro;
+Condutor::Condutor(const std::string &nome, unsigned int nif, const std::string &email, Carro carro) : Pessoa(nome, nif, email), carro(carro) {
 }
 
 Passageiro::Passageiro(const std::string &nome, unsigned int nif, const std::string &email) : Pessoa(nome, nif, email) {
