@@ -7,6 +7,9 @@
 DataImporter::DataImporter(const std::string &nodesFilename, const std::string &edgesFilename) : nodesFilename(nodesFilename),
                                                                                        edgesFilename(edgesFilename) {
     graph = Graph<Local>();
+
+    graphViewer = new GraphViewer(750, 750, false);
+    
 }
 
 void DataImporter::parseNodes() {
@@ -33,8 +36,6 @@ void DataImporter::parseNodes() {
         ss >> y;
 
         this->graph.addVertex(Local(id, "null", x, y));
-
-        // this->locais.emplace_back(new Local(id, "null", x, y));
     }
 }
 
@@ -62,28 +63,34 @@ void DataImporter::parseEdges() {
 }
 
 void DataImporter::viewGraph() {
+    // TODO - Create a new thread for graph visualization
+}
+
+Graph<Local> *DataImporter::getGraph() {
+    return &this->graph;
+}
+
+void DataImporter::_viewGraph() {
     this->parseNodes();
     this->parseEdges();
 
-    GraphViewer* gv = new GraphViewer(750, 750, false);
-    gv->createWindow(750, 750);
-    gv->defineVertexColor("blue");
-    gv->defineEdgeColor("black");
+    graphViewer->createWindow(750, 750);
+    graphViewer->defineVertexColor("blue");
+    graphViewer->defineEdgeColor("black");
 
     int edgeID = 0;
     for (auto vertex : this->graph.getVertexSet()) {
-        gv->addNode(vertex->getInfo().getId(), vertex->getInfo().getX(), vertex->getInfo().getY());
-        gv->setVertexLabel(vertex->getInfo().getId(), std::to_string(vertex->getInfo().getId()));
+        graphViewer->addNode(vertex->getInfo().getId(), vertex->getInfo().getX(), vertex->getInfo().getY());
+        graphViewer->setVertexLabel(vertex->getInfo().getId(), std::to_string(vertex->getInfo().getId()));
         for (auto edge : vertex->getAdj())
-            gv->addEdge(edgeID++, vertex->getInfo().getId(), edge.getDest()->getInfo().getId(), EdgeType::UNDIRECTED);
+            graphViewer->addEdge(edgeID++, vertex->getInfo().getId(), edge.getDest()->getInfo().getId(), EdgeType::UNDIRECTED);
 
     }
 
-    gv->setBackground("background.jpg");
-    gv->defineEdgeCurved(false);
-    gv->rearrange();
+    graphViewer->setBackground("background.jpg");
+    graphViewer->defineEdgeCurved(false);
+    graphViewer->rearrange();
 
-    std::cout << "Press any key to close this window ...";
+    std::cout << "Press any key to continue ...";
     getchar();
-    gv->closeWindow();
 }

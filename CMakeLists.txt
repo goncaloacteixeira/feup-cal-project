@@ -15,4 +15,4 @@ add_executable(meetup-rider src/meetupRider.cpp
         src/Carro.cpp src/include/Carro.h
         src/Pessoa.cpp src/include/Pessoa.h
         src/Local.cpp src/include/Local.h
-        src/lib/GraphViewer/connection.cpp src/lib/GraphViewer/graphviewer.cpp src/DataImporter.cpp src/include/DataImporter.h src/include/Graph.h src/include/MutablePriorityQueue.h)
+        src/lib/GraphViewer/connection.cpp src/lib/GraphViewer/graphviewer.cpp src/DataImporter.cpp src/include/DataImporter.h src/include/Graph.h src/include/MutablePriorityQueue.h src/DataProcessor.cpp src/include/DataProcessor.h)
