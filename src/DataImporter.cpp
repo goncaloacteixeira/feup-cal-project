@@ -57,7 +57,7 @@ void DataImporter::parseEdges() {
         ss >> id2;
         ss >> unused;
 
-        graph.addEdge(Local(id1), Local(id2), 0); /* the weight needs to be calculated for each type of road */
+        graph.addBidirectionalEdge(Local(id1), Local(id2), 0); /* the weight needs to be calculated for each type of road */
     }
 }
 
@@ -78,6 +78,7 @@ void DataImporter::viewGraph() {
     }
 
     gv->setBackground("background.jpg");
+    gv->defineEdgeCurved(false);
     gv->rearrange();
 
     std::cout << "Press any key to close this window ...";
