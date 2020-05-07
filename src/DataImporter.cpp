@@ -6,8 +6,6 @@
 
 DataImporter::DataImporter(const std::string &nodesFilename, const std::string &edgesFilename) : nodesFilename(nodesFilename),
                                                                                        edgesFilename(edgesFilename) {
-    graph = Graph<Local>();
-
     graphViewer = new GraphViewer(750, 750, false);
 }
 
@@ -57,7 +55,7 @@ void DataImporter::parseEdges() {
         ss >> id2;
         ss >> unused;
 
-        graph.addBidirectionalEdge(Local(id1), Local(id2), 0); /* the weight needs to be calculated for each type of road */
+        graph.addBidirectionalEdge(Local(id1), Local(id2), 1); /* the weight needs to be calculated for each type of road */
     }
 }
 
@@ -66,9 +64,6 @@ Graph<Local> *DataImporter::getGraph() {
 }
 
 void DataImporter::viewGraph() {
-    this->parseNodes();
-    this->parseEdges();
-
     graphViewer->createWindow(750, 750);
     graphViewer->defineVertexColor("blue");
     graphViewer->defineEdgeColor("black");
@@ -87,5 +82,14 @@ void DataImporter::viewGraph() {
 
     std::cout << "Press any key to continue ...";
     getchar();
-    graphViewer->closeWindow();
+}
+
+GraphViewer *DataImporter::getGraphViewer() const {
+    return graphViewer;
+}
+
+void DataImporter::parseData() {
+    this->graph = Graph<Local>();
+    this->parseNodes();
+    this->parseEdges();
 }

@@ -8,13 +8,19 @@
 #include "Graph.h"
 #include "DataImporter.h"
 
-class DataProcessor {
-    Graph<Local>* graph;
+typedef enum {
+    bellmanford,
+    dijkstra,
+} algorithm_t;
 
+class DataProcessor {
+    DataImporter dataImporter;
+    static int edgeID;
 public:
-    DataProcessor(Graph<Local> *graph);
-    void buildPath(int id1, int id2);
-    void showPath();
+    DataProcessor(const DataImporter &dataImporter);
+
+    void computePaths(int source, algorithm_t algorithm);
+    void buildPath(int source, int destiny);
 };
 
 

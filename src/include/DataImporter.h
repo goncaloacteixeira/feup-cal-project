@@ -28,7 +28,12 @@ public:
     DataImporter(const std::string &nodesFilename, const std::string &edgesFilename);
 
     Graph<Local>* getGraph();
+
+    void parseData();
+
     void viewGraph();
+
+    GraphViewer *getGraphViewer() const;
 };
 
 
