@@ -48,13 +48,13 @@ void DataProcessor::buildPath(int source, int destiny) {
 
     this->dataImporter.getGraphViewer()->rearrange();
 
+    std::cout << "Press any key to continue ...";
+    getchar();
+
     /* cleanup */
     for (auto v : path)
         this->dataImporter.getGraphViewer()->clearVertexColor(v.getId());
     for (int i = 0; i < edgeIDs.size(); i++)
         this->dataImporter.getGraphViewer()->removeEdge(edgeIDs[i]);
-
-    std::cout << "Press any key to continue ...";
-    getchar();
 }
 
