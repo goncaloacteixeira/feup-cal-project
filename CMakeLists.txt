@@ -9,7 +9,7 @@ include_directories(res)
 
 # The line below is necessary if you are under Windows only
 # Comment the line below if you are under Linux or Mac OS
-# link_libraries(ws2_32 wsock32)
+link_libraries(ws2_32 wsock32)
 
 add_executable(meetup-rider src/meetupRider.cpp
         src/Carro.cpp src/include/Carro.h

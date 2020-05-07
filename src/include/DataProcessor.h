@@ -16,11 +16,15 @@ typedef enum {
 class DataProcessor {
     DataImporter dataImporter;
     static int edgeID;
+    std::vector<int> tmpEdges;
+    std::vector<Local> tmpPath;
 public:
     DataProcessor(const DataImporter &dataImporter);
 
     void computePaths(int source, algorithm_t algorithm);
     void buildPath(int source, int destiny);
+    int pathCost();
+    void cleanup();
 };
 
 
