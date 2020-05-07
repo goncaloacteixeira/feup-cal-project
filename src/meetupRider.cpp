@@ -23,8 +23,8 @@ void graphViz16() {
 
 
 int main() {
-    graphViz4();
+    // graphViz4();
     graphViz8();
-    graphViz16();
+    // graphViz16();
 }
 

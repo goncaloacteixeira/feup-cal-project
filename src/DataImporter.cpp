@@ -73,8 +73,10 @@ void DataImporter::viewGraph() {
     int edgeID = 0;
     for (auto vertex : this->graph.getVertexSet()) {
         gv->addNode(vertex->getInfo().getId(), vertex->getInfo().getX(), vertex->getInfo().getY());
+        gv->setVertexLabel(vertex->getInfo().getId(), std::to_string(vertex->getInfo().getId()));
         for (auto edge : vertex->getAdj())
             gv->addEdge(edgeID++, vertex->getInfo().getId(), edge.getDest()->getInfo().getId(), EdgeType::UNDIRECTED);
+
     }
 
     gv->setBackground("background.jpg");
