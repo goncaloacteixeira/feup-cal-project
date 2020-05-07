@@ -4,7 +4,6 @@
 
 #include <iostream>
 
-#include "GraphViewer/graphviewer.h"
 #include "DataImporter.h"
 
 void graphViz4() {

@@ -12,12 +12,14 @@
 
 #include "Local.h"
 #include "GraphViewer/graphviewer.h"
+#include "Graph.h"
 
 class DataImporter {
     std::string nodesFilename;
     std::string edgesFilename;
 
     std::vector<Local*> locais;
+    Graph<Local> graph;
 
     void parseEdges();
     void parseNodes();

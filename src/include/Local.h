@@ -23,6 +23,8 @@ public:
      */
     Local();
 
+    Local(int id);
+
     Local(int id, const std::string &nome, double x, double y);
 
     /**
@@ -42,6 +44,10 @@ public:
     double getX() const;
 
     double getY() const;
+
+    bool operator==(const Local &rhs) const;
+
+    bool operator!=(const Local &rhs) const;
 };
 
 

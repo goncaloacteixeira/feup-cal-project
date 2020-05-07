@@ -35,3 +35,15 @@ double Local::getX() const {
 double Local::getY() const {
     return y;
 }
+
+bool Local::operator==(const Local &rhs) const {
+    return id == rhs.id;
+}
+
+bool Local::operator!=(const Local &rhs) const {
+    return !(rhs == *this);
+}
+
+Local::Local(int id) : Local() {
+    this->id = id;
+}
