@@ -9,7 +9,6 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include <thread>
 
 #include "Local.h"
 #include "GraphViewer/graphviewer.h"
@@ -30,7 +29,6 @@ public:
 
     Graph<Local>* getGraph();
     void viewGraph();
-    void _viewGraph();
 };
 
 

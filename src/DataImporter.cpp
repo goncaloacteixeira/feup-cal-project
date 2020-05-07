@@ -9,7 +9,6 @@ DataImporter::DataImporter(const std::string &nodesFilename, const std::string &
     graph = Graph<Local>();
 
     graphViewer = new GraphViewer(750, 750, false);
-    
 }
 
 void DataImporter::parseNodes() {
@@ -62,15 +61,11 @@ void DataImporter::parseEdges() {
     }
 }
 
-void DataImporter::viewGraph() {
-    // TODO - Create a new thread for graph visualization
-}
-
 Graph<Local> *DataImporter::getGraph() {
     return &this->graph;
 }
 
-void DataImporter::_viewGraph() {
+void DataImporter::viewGraph() {
     this->parseNodes();
     this->parseEdges();
 
@@ -84,7 +79,6 @@ void DataImporter::_viewGraph() {
         graphViewer->setVertexLabel(vertex->getInfo().getId(), std::to_string(vertex->getInfo().getId()));
         for (auto edge : vertex->getAdj())
             graphViewer->addEdge(edgeID++, vertex->getInfo().getId(), edge.getDest()->getInfo().getId(), EdgeType::UNDIRECTED);
-
     }
 
     graphViewer->setBackground("background.jpg");
@@ -93,4 +87,5 @@ void DataImporter::_viewGraph() {
 
     std::cout << "Press any key to continue ...";
     getchar();
+    graphViewer->closeWindow();
 }
