@@ -65,7 +65,7 @@ Graph<Local> *DataImporter::getGraph() {
 
 void DataImporter::viewGraph() {
     graphViewer->createWindow(750, 750);
-    graphViewer->defineVertexColor("blue");
+    graphViewer->defineVertexColor("black");
     graphViewer->defineEdgeColor("black");
 
     int edgeID = 0;

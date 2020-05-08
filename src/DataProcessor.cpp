@@ -26,16 +26,12 @@ void DataProcessor::computePaths(int source, algorithm_t algorithm) {
 
 void DataProcessor::buildPath(int source, int destiny) {
     tmpPath = this->dataImporter.getGraph()->getPath(Local(source), Local(destiny));
-    Vertex<Local> *vertex = nullptr;
-
     this->tmpEdges.clear();
 
+    Vertex<Local> *vertex = nullptr;
+
     for (const auto& v : tmpPath) {
-        if (v.getId() == source)
-            this->dataImporter.getGraphViewer()->setVertexColor(v.getId(), "green");
-        else if (v.getId() == destiny)
-            this->dataImporter.getGraphViewer()->setVertexColor(v.getId(), "red");
-        else
+        if (v.getId() != destiny && v.getId() != source)
             this->dataImporter.getGraphViewer()->setVertexColor(v.getId(), "yellow");
 
         if (vertex == nullptr)
@@ -49,11 +45,7 @@ void DataProcessor::buildPath(int source, int destiny) {
         }
     }
     this->dataImporter.getGraphViewer()->rearrange();
-
     std::cout << "Cost: " << this->pathCost() << std::endl;
-
-    std::cout << "Press any key to continue ...";
-    getchar();
 }
 
 void DataProcessor::cleanup() {
@@ -61,19 +53,41 @@ void DataProcessor::cleanup() {
         this->dataImporter.getGraphViewer()->clearVertexColor(v.getId());
     for (int i = 0; i < tmpEdges.size(); i++)
         this->dataImporter.getGraphViewer()->removeEdge(tmpEdges[i]);
+    this->dataImporter.getGraphViewer()->rearrange();
 }
 
 int DataProcessor::pathCost() {
     int result = 0;
     for (int i = 0; i < this->tmpPath.size() - 1; i++) {
         Vertex<Local>* v1 = this->dataImporter.getGraph()->findVertex(tmpPath[i]);
-        Vertex<Local>* v2 = this->dataImporter.getGraph()->findVertex(tmpPath[i+1]);
+        Vertex<Local>* v2 = this->dataImporter.getGraph()->findVertex(tmpPath[i + 1]);
         for (auto w : v1->getAdj())
             if (w.getDest() == v2)
                 result += w.getWeight();
     }
     return result;
 }
+
+void DataProcessor::markPoint(int id, point_t point) {
+    switch (point) {
+        case START:
+            this->dataImporter.getGraphViewer()->setVertexColor(id, "green");
+            break;
+        case END:
+            this->dataImporter.getGraphViewer()->setVertexColor(id, "red");
+            break;
+        case STOP:
+            this->dataImporter.getGraphViewer()->setVertexColor(id, "blue");
+            break;
+    }
+    this->dataImporter.getGraphViewer()->rearrange();
+}
+
+void DataProcessor::wait() {
+    std::cout << "Press any key to continue ...";
+    getchar();
+}
+
 
 
 

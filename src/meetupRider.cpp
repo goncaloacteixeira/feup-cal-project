@@ -46,10 +46,10 @@ void graphViz16() {
     DataProcessor dataProcessor(dataImporter);
     dataProcessor.computePaths(0, dijkstra);
     dataProcessor.buildPath(0, 199);
-    dataProcessor.cleanup();
-    dataProcessor.computePaths(0, bellmanford);
-    dataProcessor.buildPath(0, 199);
-    dataProcessor.cleanup();
+    dataProcessor.markPoint(0, START);
+    dataProcessor.markPoint(199, END);
+    dataProcessor.markPoint(108, STOP);
+    dataProcessor.wait();
 
     dataImporter.getGraphViewer()->closeWindow();
 }

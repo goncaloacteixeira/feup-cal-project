@@ -13,6 +13,12 @@ typedef enum {
     dijkstra,
 } algorithm_t;
 
+typedef enum {
+    START,
+    END,
+    STOP,
+} point_t;
+
 class DataProcessor {
     DataImporter dataImporter;
     static int edgeID;
@@ -23,8 +29,11 @@ public:
 
     void computePaths(int source, algorithm_t algorithm);
     void buildPath(int source, int destiny);
+    void markPoint(int id, point_t point);
     int pathCost();
     void cleanup();
+
+    void wait();
 };
 
 
