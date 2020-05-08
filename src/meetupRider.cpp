@@ -59,10 +59,10 @@ void csvExample() {
     auto data = csvReader.getData();
 
     std::cout << "id\tname\tage\tnode\n";
+    std::cout << "-----------------------------\n";
     for (auto line : data) {
-        for (auto value : line) {
+        for (auto value : line)
             std::cout << value << "\t";
-        }
         std::cout << std::endl;
     }
 }
@@ -72,9 +72,8 @@ int main() {
      * *IMPORTANTE* - mudar a working directory do CLion para a raiz do repositório. *
      *********************************************************************************/
 
-    /* decomentar a linha seguinte para ver o exemplo para um grafo de grelha de 16x16 */
+    /* descomentar a linha seguinte para ver o exemplo para um grafo de grelha de 16x16 */
     // graphViz16();
-
 
     csvExample();
 }
