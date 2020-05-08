@@ -21,13 +21,19 @@ void DataProcessor::computePaths(int source, algorithm_t algorithm) {
             std::cout << "Processing paths from " << source << " with Dijkstra's Algorithm\n";
             this->dataImporter.getGraph()->dijkstraShortestPath(Local(source));
             break;
+        case floydwarshall:
+            std::cout << "Processing all pairs of paths with Floyd Warshall's Algorithm\n";
+            this->dataImporter.getGraph()->floydWarshallShortestPath();
+            break;
     }
 }
 
 void DataProcessor::buildPath(int source, int destiny, algorithm_t algorithm) {
-    this->computePaths(source, algorithm);
+    // needs to compute path first !
 
-    tmpPath = this->dataImporter.getGraph()->getPath(Local(source), Local(destiny));
+    tmpPath = (algorithm != floydwarshall) ? this->dataImporter.getGraph()->getPath(Local(source), Local(destiny)) :
+            this->dataImporter.getGraph()->getfloydWarshallPath(Local(source), Local(destiny));
+
     this->tmpEdges.clear();
 
     Vertex<Local> *vertex = nullptr;
@@ -90,16 +96,48 @@ void DataProcessor::wait() {
     getchar();
 }
 
-void DataProcessor::findPath(std::vector<int> points) {
-    /*
-     * [ INICIO, PARAGEM 1, PARAGEM 2, PARAGEM n, DESTINO ]
-     */
-    this->buildPath(points[0], points[1], dijkstra);
-    this->buildPath(points[1], points[2], dijkstra);
+/* this needs a lot of improvement */
+std::vector<int> DataProcessor::findPath(std::vector<int> points, algorithm_t algorithm) {
+    int index = 0;
+    int current_index = 0;
+    int edges_worked = 0;
+    std::vector<int> worked;
+    worked.push_back(index);
+
+    std::vector<int> path;
+    path.push_back(points[0]);
+
+    while (edges_worked < points.size() - 2) {
+        int current_cost = INT16_MAX;
+        this->computePaths(points[index], algorithm);
+        for (int i = 1; i < points.size() - 1; i++) {
+            if (i != index && std::find(worked.begin(), worked.end(), i) == worked.end()) {
+                this->tmpPath = (algorithm == floydwarshall) ?
+                        this->dataImporter.getGraph()->getfloydWarshallPath(Local(points[index]), Local(points[i])) :
+                        this->dataImporter.getGraph()->getPath(Local(points[index]), Local(points[i]));
+
+                if (current_cost > this->pathCost()) {
+                    current_index = i;
+                    current_cost = this->pathCost();
+                }
+            }
+        }
+        buildPath(points[index], points[current_index], algorithm);
+        index = current_index;
+        path.push_back(points[index]);
+        worked.push_back(index);
+        edges_worked++;
+    }
+
+    this->computePaths(points[index], algorithm);
+    buildPath(points[index], points[points.size() - 1], algorithm);
 
     this->markPoint(points[0], START);
-    this->markPoint(points[1], STOP);
-    this->markPoint(points[2], END);
+    for (int i = 1; i < points.size() -1 ; i++)
+        this->markPoint(points[i], STOP);
+    this->markPoint(points[points.size() - 1], END);
+
+    return path;
 }
 
 

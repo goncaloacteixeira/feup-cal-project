@@ -11,6 +11,7 @@
 typedef enum {
     bellmanford,
     dijkstra,
+    floydwarshall,
 } algorithm_t;
 
 typedef enum {
@@ -25,14 +26,13 @@ class DataProcessor {
     std::vector<int> tmpEdges;
     std::vector<Local> tmpPath;
 
-    void computePaths(int source, algorithm_t algorithm);
 public:
     DataProcessor(const DataImporter &dataImporter);
 
     void buildPath(int source, int destiny, algorithm_t algorithm);
     void markPoint(int id, point_t point);
-
-    void findPath(std::vector<int> points);
+    void computePaths(int source, algorithm_t algorithm);
+    std::vector<int> findPath(std::vector<int> points, algorithm_t algorithm);
 
     int pathCost();
     void cleanup();
