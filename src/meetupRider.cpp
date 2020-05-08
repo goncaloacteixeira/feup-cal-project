@@ -5,7 +5,9 @@
 #include <iostream>
 
 #include "DataProcessor.h"
+#include "CSVReader/CSVReader.h"
 
+// deprecated
 void graphViz4() {
     DataImporter dataImporter("res/GridGraphs/4x4/nodes.txt", "res/GridGraphs/4x4/edges.txt");
     dataImporter.parseData();
@@ -22,6 +24,7 @@ void graphViz4() {
     dataImporter.getGraphViewer()->closeWindow();
 }
 
+// deprecated
 void graphViz8() {
     DataImporter dataImporter("res/GridGraphs/8x8/nodes.txt", "res/GridGraphs/8x8/edges.txt");
     dataImporter.parseData();
@@ -50,10 +53,28 @@ void graphViz16() {
     dataImporter.getGraphViewer()->closeWindow();
 }
 
+/* para quem for utilizar ficheiros csv */
+void csvExample() {
+    CSVReader csvReader("res/csvFiles/example.csv", ",");
+    auto data = csvReader.getData();
+
+    std::cout << "id\tname\tage\tnode\n";
+    std::cout << "-----------------------------\n";
+    for (auto line : data) {
+        for (auto value : line)
+            std::cout << value << "\t";
+        std::cout << std::endl;
+    }
+}
 
 int main() {
-    // graphViz4();
-    // graphViz8();
-    graphViz16();
+    /*********************************************************************************
+     * *IMPORTANTE* - mudar a working directory do CLion para a raiz do repositório. *
+     *********************************************************************************/
+
+    /* descomentar a linha seguinte para ver o exemplo para um grafo de grelha de 16x16 */
+    // graphViz16();
+
+    csvExample();
 }
 
