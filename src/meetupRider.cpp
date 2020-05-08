@@ -44,7 +44,7 @@ void graphViz16() {
     dataImporter.viewGraph();
 
     DataProcessor dataProcessor(dataImporter);
-    auto path = dataProcessor.fastestPath(std::vector<int>{0, 10, 108, 225, 164, 182, 284}, bellmanford);
+    auto path = dataProcessor.completePath(std::vector<int>{0, 160, 10, 108, 225, 164, 182, 284});
     dataProcessor.wait();
 
     dataImporter.getGraphViewer()->closeWindow();

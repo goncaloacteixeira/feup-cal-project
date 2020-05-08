@@ -96,6 +96,8 @@ void DataProcessor::wait() {
 }
 
 std::vector<int> DataProcessor::completePath(std::vector<int> points) {
+    std::cout << "Building path from A to B passing in C with Floyd Warshall's algorithm\n";
+
     int index = 0;
     int current_index = 0;
     int edges_worked = 0;
@@ -126,11 +128,18 @@ std::vector<int> DataProcessor::completePath(std::vector<int> points) {
     }
 
     buildPath(points[index], points[points.size() - 1], floydwarshall);
+    path.push_back(points[points.size() - 1]);
 
     this->markPoint(points[0], START);
     for (int i = 1; i < points.size() -1 ; i++)
         this->markPoint(points[i], STOP);
     this->markPoint(points[points.size() - 1], END);
+
+
+    std::cout << "The path is: ";
+    for (int i = 0; i < path.size() - 1; i++)
+        std::cout << std::to_string(path[i]) << " -> ";
+    std::cout << std::to_string(path[path.size() - 1]) << std::endl;
 
     return path;
 }
