@@ -24,7 +24,9 @@ void DataProcessor::computePaths(int source, algorithm_t algorithm) {
     }
 }
 
-void DataProcessor::buildPath(int source, int destiny) {
+void DataProcessor::buildPath(int source, int destiny, algorithm_t algorithm) {
+    this->computePaths(source, algorithm);
+
     tmpPath = this->dataImporter.getGraph()->getPath(Local(source), Local(destiny));
     this->tmpEdges.clear();
 
@@ -45,7 +47,7 @@ void DataProcessor::buildPath(int source, int destiny) {
         }
     }
     this->dataImporter.getGraphViewer()->rearrange();
-    std::cout << "Cost: " << this->pathCost() << std::endl;
+    std::cout << "Cost from " << source << " to " << destiny << ": " << this->pathCost() << std::endl;
 }
 
 void DataProcessor::cleanup() {
@@ -86,6 +88,18 @@ void DataProcessor::markPoint(int id, point_t point) {
 void DataProcessor::wait() {
     std::cout << "Press any key to continue ...";
     getchar();
+}
+
+void DataProcessor::findPath(std::vector<int> points) {
+    /*
+     * [ INICIO, PARAGEM 1, PARAGEM 2, PARAGEM n, DESTINO ]
+     */
+    this->buildPath(points[0], points[1], dijkstra);
+    this->buildPath(points[1], points[2], dijkstra);
+
+    this->markPoint(points[0], START);
+    this->markPoint(points[1], STOP);
+    this->markPoint(points[2], END);
 }
 
 

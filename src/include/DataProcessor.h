@@ -24,12 +24,16 @@ class DataProcessor {
     static int edgeID;
     std::vector<int> tmpEdges;
     std::vector<Local> tmpPath;
+
+    void computePaths(int source, algorithm_t algorithm);
 public:
     DataProcessor(const DataImporter &dataImporter);
 
-    void computePaths(int source, algorithm_t algorithm);
-    void buildPath(int source, int destiny);
+    void buildPath(int source, int destiny, algorithm_t algorithm);
     void markPoint(int id, point_t point);
+
+    void findPath(std::vector<int> points);
+
     int pathCost();
     void cleanup();
 
