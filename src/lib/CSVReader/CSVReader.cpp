@@ -9,11 +9,7 @@
 
 CSVReader::CSVReader(const std::string& filename, std::string delimiter) {
     this->delimiter = std::move(delimiter);
-    this->file = std::ifstream(filename);
-
-    if (!this->file.is_open()) {
-        throw FileNotFound(filename);
-    }
+    this->filename = filename;
 }
 
 std::vector<std::string> parseString(std::string s, std::string delimiter) {
@@ -29,26 +25,30 @@ std::vector<std::string> parseString(std::string s, std::string delimiter) {
     return line;
 }
 
+
+
 std::vector<std::vector<std::string>> CSVReader::getData() {
     std::vector<std::vector<std::string>> data;
+    std::ifstream file(this->filename);
+
+    if (!file.is_open())
+        throw FileNotFound(filename);
 
     std::string line;
-    getline(this->file, line);                  // skip header
-    while (getline(this->file, line)) {
+    getline(file, line);                  // skip header
+    while (getline(file, line)) {
         data.push_back(parseString(line, delimiter));
     }
 
+    file.close();
     return data;
 }
 
 CSVReader::~CSVReader() {
-    this->file.close();
+
 }
 
-
-
 // Exception class
-
 FileNotFound::FileNotFound(const std::string &filename) : filename(filename) {
 
 }

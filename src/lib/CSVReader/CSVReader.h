@@ -9,7 +9,7 @@
  * @brief Class CSVReader
  */
 class CSVReader {
-    std::ifstream file;     //!< stream to the file
+    std::string filename;     //!< stream to the file
     std::string delimiter;  //!< delimiter to be used to parse data (usually ",")
 public:
     /**
@@ -26,7 +26,7 @@ public:
      * @brief Function to return data
      * @return vector of line vectors (each vector inside this vector contains all line columns)
      */
-    std:: vector<std::vector<std::string>> getData();
+    std::vector<std::vector<std::string>> getData();
 };
 
 /**
