@@ -98,6 +98,11 @@ void DataProcessor::wait() {
 
 /* this needs a lot of improvement */
 std::vector<int> DataProcessor::findPath(std::vector<int> points, algorithm_t algorithm) {
+    /*
+     * Melhor -> Criar um grafo com pontos utilizando o algoritmo de Floyd Marshal
+     * e calcular o melhor caminho de A a B passando por todos os pontos
+     */
+
     int index = 0;
     int current_index = 0;
     int edges_worked = 0;
