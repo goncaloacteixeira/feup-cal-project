@@ -28,18 +28,17 @@ void DataProcessor::computePaths(int source, algorithm_t algorithm) {
     }
 }
 
-void DataProcessor::buildPath(int source, int destiny, algorithm_t algorithm) {
+void DataProcessor::buildPath(int source, int destination, algorithm_t algorithm) {
     // needs to compute path first !
-
-    tmpPath = (algorithm != floydwarshall) ? this->dataImporter.getGraph()->getPath(Local(source), Local(destiny)) :
-            this->dataImporter.getGraph()->getfloydWarshallPath(Local(source), Local(destiny));
+    tmpPath = (algorithm != floydwarshall) ? this->dataImporter.getGraph()->getPath(Local(source), Local(destination)) :
+            this->dataImporter.getGraph()->getfloydWarshallPath(Local(source), Local(destination));
 
     this->tmpEdges.clear();
 
     Vertex<Local> *vertex = nullptr;
 
     for (const auto& v : tmpPath) {
-        if (v.getId() != destiny && v.getId() != source)
+        if (v.getId() != destination && v.getId() != source)
             this->dataImporter.getGraphViewer()->setVertexColor(v.getId(), "yellow");
 
         if (vertex == nullptr)
@@ -53,7 +52,7 @@ void DataProcessor::buildPath(int source, int destiny, algorithm_t algorithm) {
         }
     }
     this->dataImporter.getGraphViewer()->rearrange();
-    std::cout << "Cost from " << source << " to " << destiny << ": " << this->pathCost() << std::endl;
+    std::cout << "Cost from " << source << " to " << destination << ": " << this->pathCost() << std::endl;
 }
 
 void DataProcessor::cleanup() {
@@ -96,13 +95,7 @@ void DataProcessor::wait() {
     getchar();
 }
 
-/* this needs a lot of improvement */
-std::vector<int> DataProcessor::findPath(std::vector<int> points, algorithm_t algorithm) {
-    /*
-     * Melhor -> Criar um grafo com pontos utilizando o algoritmo de Floyd Marshal
-     * e calcular o melhor caminho de A a B passando por todos os pontos
-     */
-
+std::vector<int> DataProcessor::completePath(std::vector<int> points) {
     int index = 0;
     int current_index = 0;
     int edges_worked = 0;
@@ -112,36 +105,52 @@ std::vector<int> DataProcessor::findPath(std::vector<int> points, algorithm_t al
     std::vector<int> path;
     path.push_back(points[0]);
 
+    this->dataImporter.getGraph()->floydWarshallShortestPath();
+    auto weightMatrix = this->dataImporter.getGraph()->getDistanceMatrix();
+
     while (edges_worked < points.size() - 2) {
-        int current_cost = INT16_MAX;
-        this->computePaths(points[index], algorithm);
+        double current_cost = INT16_MAX;
         for (int i = 1; i < points.size() - 1; i++) {
             if (i != index && std::find(worked.begin(), worked.end(), i) == worked.end()) {
-                this->tmpPath = (algorithm == floydwarshall) ?
-                        this->dataImporter.getGraph()->getfloydWarshallPath(Local(points[index]), Local(points[i])) :
-                        this->dataImporter.getGraph()->getPath(Local(points[index]), Local(points[i]));
-
-                if (current_cost > this->pathCost()) {
+                if (current_cost > weightMatrix[this->dataImporter.getGraph()->findVertexIdx(Local(points[index]))][this->dataImporter.getGraph()->findVertexIdx(Local(points[i]))]) {
                     current_index = i;
-                    current_cost = this->pathCost();
+                    current_cost = weightMatrix[this->dataImporter.getGraph()->findVertexIdx(Local(points[index]))][this->dataImporter.getGraph()->findVertexIdx(Local(points[i]))];
                 }
             }
         }
-        buildPath(points[index], points[current_index], algorithm);
+        buildPath(points[index], points[current_index], floydwarshall);
         index = current_index;
         path.push_back(points[index]);
         worked.push_back(index);
         edges_worked++;
     }
 
-    this->computePaths(points[index], algorithm);
-    buildPath(points[index], points[points.size() - 1], algorithm);
+    buildPath(points[index], points[points.size() - 1], floydwarshall);
 
     this->markPoint(points[0], START);
     for (int i = 1; i < points.size() -1 ; i++)
         this->markPoint(points[i], STOP);
     this->markPoint(points[points.size() - 1], END);
 
+    return path;
+}
+
+std::vector<int> DataProcessor::fastestPath(std::vector<int> points, algorithm_t algorithm) {
+    this->computePaths(points[0], algorithm);
+    this->buildPath(points[0], points[points.size() - 1], algorithm);
+
+    std::vector<int> path;
+    path.push_back(points[0]);
+
+    for (int i = 1; i < points.size() - 1; i++) {
+        if (std::find(this->tmpPath.begin(), this->tmpPath.end(), points[i]) != this->tmpPath.end()) {
+            this->markPoint(points[i], STOP);
+            path.push_back(points[i]);
+        }
+    }
+    path.push_back(points[points.size() - 1]);
+    markPoint(points[0], START);
+    markPoint(points[points.size() - 1], END);
     return path;
 }
 

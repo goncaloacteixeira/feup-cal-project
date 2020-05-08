@@ -29,10 +29,11 @@ class DataProcessor {
 public:
     DataProcessor(const DataImporter &dataImporter);
 
-    void buildPath(int source, int destiny, algorithm_t algorithm);
+    void buildPath(int source, int destination, algorithm_t algorithm);
     void markPoint(int id, point_t point);
     void computePaths(int source, algorithm_t algorithm);
-    std::vector<int> findPath(std::vector<int> points, algorithm_t algorithm);
+    std::vector<int> completePath(std::vector<int> points);
+    std::vector<int> fastestPath(std::vector<int> points, algorithm_t algorithm);
 
     int pathCost();
     void cleanup();

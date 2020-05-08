@@ -118,9 +118,6 @@ class Graph {
     bool relax(Vertex<T> *v, Vertex<T> *w, double weight);
     double ** W = nullptr;   // dist
     int **P = nullptr;   // path
-    int findVertexIdx(const T &in) const;
-
-
 public:
     Vertex<T> *findVertex(const T &in) const;
     bool addVertex(const T &in);
@@ -137,6 +134,8 @@ public:
     // Fp05 - all pairs
     void floydWarshallShortestPath();
     vector<T> getfloydWarshallPath(const T &origin, const T &dest) const;
+    double** getDistanceMatrix();
+    int findVertexIdx(const T &in) const;
     ~Graph();
 
     // Fp07 - minimum spanning tree
@@ -394,6 +393,11 @@ template <class T>
 vector<Vertex<T>*> Graph<T>::calculateKruskal() {
     // TODO
     return vertexSet;
+}
+
+template<class T>
+double **Graph<T>::getDistanceMatrix() {
+    return this->W;
 }
 
 
