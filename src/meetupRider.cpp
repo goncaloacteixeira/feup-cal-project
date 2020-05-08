@@ -13,10 +13,10 @@ void graphViz4() {
 
     DataProcessor dataProcessor(dataImporter);
     dataProcessor.computePaths(0, dijkstra);
-    dataProcessor.buildPath(0, 12);
+    dataProcessor.buildPath(0, 12, dijkstra);
     dataProcessor.cleanup();
     dataProcessor.computePaths(0, bellmanford);
-    dataProcessor.buildPath(0, 12);
+    dataProcessor.buildPath(0, 12, bellmanford);
     dataProcessor.cleanup();
 
     dataImporter.getGraphViewer()->closeWindow();
@@ -29,10 +29,10 @@ void graphViz8() {
 
     DataProcessor dataProcessor(dataImporter);
     dataProcessor.computePaths(0, dijkstra);
-    dataProcessor.buildPath(0, 49);
+    dataProcessor.buildPath(0, 49, dijkstra);
     dataProcessor.cleanup();
     dataProcessor.computePaths(0, bellmanford);
-    dataProcessor.buildPath(0, 49);
+    dataProcessor.buildPath(0, 49, bellmanford);
     dataProcessor.cleanup();
 
     dataImporter.getGraphViewer()->closeWindow();
@@ -44,12 +44,8 @@ void graphViz16() {
     dataImporter.viewGraph();
 
     DataProcessor dataProcessor(dataImporter);
-    dataProcessor.computePaths(0, dijkstra);
-    dataProcessor.buildPath(0, 199);
-    dataProcessor.cleanup();
-    dataProcessor.computePaths(0, bellmanford);
-    dataProcessor.buildPath(0, 199);
-    dataProcessor.cleanup();
+    auto path = dataProcessor.completePath(std::vector<int>{0, 160, 10, 108, 225, 164, 182, 284});
+    dataProcessor.wait();
 
     dataImporter.getGraphViewer()->closeWindow();
 }
