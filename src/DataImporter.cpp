@@ -5,7 +5,9 @@
 #include "DataImporter.h"
 
 DataImporter::DataImporter(const std::string &nodesFilename, const std::string &edgesFilename) : nodesFilename(nodesFilename),
-                                                                                       edgesFilename(edgesFilename) { }
+                                                                                       edgesFilename(edgesFilename) {
+    graphViewer = new GraphViewer(750, 750, false);
+}
 
 void DataImporter::parseNodes() {
     std::vector<std::string> nodes;
@@ -30,26 +32,64 @@ void DataImporter::parseNodes() {
         ss >> unused;
         ss >> y;
 
-        this->locais.emplace_back(new Local(id, "null", x, y));
+        this->graph.addVertex(Local(id, "null", x, y));
     }
 }
 
-void DataImporter::viewGraph() {
-    this->parseNodes();
+void DataImporter::parseEdges() {
+    vector<string> edges;
+    ifstream edgesFile(this->edgesFilename);
 
-    GraphViewer* gv = new GraphViewer(750, 750, false);
-    gv->createWindow(750, 750);
-    gv->defineVertexColor("blue");
-    gv->defineEdgeColor("black");
-
-    for (auto local : this->locais) {
-        gv->addNode(local->getId(), local->getX(), local->getY());
+    string line;
+    while (getline(edgesFile, line)) {
+        edges.emplace_back(line);
     }
 
-    gv->setBackground("background.jpg");
-    gv->rearrange();
+    for (int i = 1; i <= stoi(edges[0]) ; ++i) {
+        char unused;
+        int id1, id2;
+        istringstream ss(edges[i]);
+        ss >> unused;
+        ss >> id1;
+        ss >> unused;
+        ss >> id2;
+        ss >> unused;
 
-    std::cout << "Press any key to close this window ...";
+        graph.addBidirectionalEdge(Local(id1), Local(id2), 1); /* the weight needs to be calculated for each type of road */
+    }
+}
+
+Graph<Local> *DataImporter::getGraph() {
+    return &this->graph;
+}
+
+void DataImporter::viewGraph() {
+    graphViewer->createWindow(750, 750);
+    graphViewer->defineVertexColor("blue");
+    graphViewer->defineEdgeColor("black");
+
+    int edgeID = 0;
+    for (auto vertex : this->graph.getVertexSet()) {
+        graphViewer->addNode(vertex->getInfo().getId(), vertex->getInfo().getX(), vertex->getInfo().getY());
+        graphViewer->setVertexLabel(vertex->getInfo().getId(), std::to_string(vertex->getInfo().getId()));
+        for (auto edge : vertex->getAdj())
+            graphViewer->addEdge(edgeID++, vertex->getInfo().getId(), edge.getDest()->getInfo().getId(), EdgeType::UNDIRECTED);
+    }
+
+    graphViewer->setBackground("background.jpg");
+    graphViewer->defineEdgeCurved(false);
+    graphViewer->rearrange();
+
+    std::cout << "Press any key to continue ...";
     getchar();
-    gv->closeWindow();
+}
+
+GraphViewer *DataImporter::getGraphViewer() const {
+    return graphViewer;
+}
+
+void DataImporter::parseData() {
+    this->graph = Graph<Local>();
+    this->parseNodes();
+    this->parseEdges();
 }
