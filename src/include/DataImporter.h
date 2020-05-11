@@ -33,6 +33,8 @@ public:
 
     void viewGraph();
 
+    void wait();
+
     GraphViewer *getGraphViewer() const;
 };
 

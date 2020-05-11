@@ -79,7 +79,9 @@ void DataImporter::viewGraph() {
     graphViewer->setBackground("background.jpg");
     graphViewer->defineEdgeCurved(false);
     graphViewer->rearrange();
+}
 
+void DataImporter::wait() {
     std::cout << "Press any key to continue ...";
     getchar();
 }

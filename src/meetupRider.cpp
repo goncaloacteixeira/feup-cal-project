@@ -45,6 +45,7 @@ void graphViz16() {
     DataImporter dataImporter("res/GridGraphs/16x16/nodes.txt", "res/GridGraphs/16x16/edges.txt");
     dataImporter.parseData();
     dataImporter.viewGraph();
+    dataImporter.wait();
 
     DataProcessor dataProcessor(dataImporter);
     auto path = dataProcessor.completePath(std::vector<int>{0, 160, 10, 108, 225, 164, 182, 284});
@@ -73,8 +74,8 @@ int main() {
      *********************************************************************************/
 
     /* descomentar a linha seguinte para ver o exemplo para um grafo de grelha de 16x16 */
-    // graphViz16();
+    graphViz16();
 
-    csvExample();
+    // csvExample();
 }
 
