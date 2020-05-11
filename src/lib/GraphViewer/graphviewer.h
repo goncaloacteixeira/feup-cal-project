@@ -115,8 +115,8 @@ public:
 	 * que liga os nós com os IDs 1 e 2
 	 *
 	 * @param id Identificador único da aresta.
-	 * @param v1 Identificador único do nó de origem da aresta.
-	 * @param v2 Identificador único do nó de destino da aresta.
+	 * @param v1 Identificador único do nó de origin da aresta.
+	 * @param v2 Identificador único do nó de destiny da aresta.
 	 * @param edgeType EdgeType.DIRECTED caso a aresta seja unidirecional
 	 * ou EdgeType.UNDIRECTED caso a aresta seja bidirecional.
 	 */
