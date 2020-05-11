@@ -27,6 +27,8 @@ public:
      * @return vector of line vectors (each vector inside this vector contains all line columns)
      */
     std::vector<std::vector<std::string>> getData();
+
+    static std::vector<std::string> parseString(std::string s, std::string delimiter);
 };
 
 /**

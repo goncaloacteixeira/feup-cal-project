@@ -12,7 +12,7 @@ CSVReader::CSVReader(const std::string& filename, std::string delimiter) {
     this->filename = filename;
 }
 
-std::vector<std::string> parseString(std::string s, std::string delimiter) {
+std::vector<std::string> CSVReader::parseString(std::string s, std::string delimiter) {
     std::vector<std::string> line;
     size_t pos = 0;
     std::string token;
