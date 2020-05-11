@@ -4,22 +4,22 @@
 #include <string>
 #include <vector>
 #include "Carro.h"
-#include "Local.h"
+#include "Place.h"
 
 /**
  * @brief Super Classe Pessoa
  */
 class Pessoa {
-    Local origem;       //!< Local de origem da Pessoa
-    Local destino;      //!< Local de destino da Pessoa
-    std::string nome;   //!< nome da Pessoa
+    Place origem;       //!< Place de origem da Pessoa
+    Place destino;      //!< Place de destino da Pessoa
+    std::string nome;   //!< name da Pessoa
     unsigned int nif;   //!< NIF da Pessoa
     std::string email;  //!< email da Pessoa
-    std::vector<Local *> destinosFrequentes;    //!< Locais mais frequentes como destino
+    std::vector<Place *> destinosFrequentes;    //!< Locais mais frequentes como destino
 public:
     /**
      * @brief Construtor de Pessoa
-     * @param nome nome da Pessoa
+     * @param nome name da Pessoa
      * @param nif NIF da Pessoa
      * @param email email da Pessoa
      */
@@ -27,19 +27,19 @@ public:
 
     /**
      * @brief Método GET de origem
-     * @return Local de origem da Pessoa
+     * @return Place de origem da Pessoa
      */
-    Local getOrigem() const;
+    Place getOrigem() const;
 
     /**
      * @brief Método GET de destino
-     * @return Local de destino da Pessoa
+     * @return Place de destino da Pessoa
      */
-    Local getDestino() const;
+    Place getDestino() const;
 
     /**
-     * @brief Método GET de nome
-     * @return nome da Pessoa
+     * @brief Método GET de name
+     * @return name da Pessoa
      */
     std::string getNome() const;
 
@@ -59,7 +59,7 @@ public:
      * @brief Método GET de destinos frequentes
      * @return vetor com os destinos frequentes da Pessoa
      */
-    std::vector<Local *> getDestinosFrequentes() const;
+    std::vector<Place *> getDestinosFrequentes() const;
 };
 
 /**
@@ -71,7 +71,7 @@ class Condutor : public Pessoa {
 public:
     /**
      * @brief Construtor de Condutor
-     * @param nome nome do Condutor
+     * @param nome name do Condutor
      * @param nif NIF do Condutor
      * @param email email do Condutor
      * @param carro carro do Condutor
@@ -93,7 +93,7 @@ class Passageiro : public Pessoa {
 public:
     /**
      * @brief Construtor de Passageiro
-     * @param nome nome do Passageiro
+     * @param nome name do Passageiro
      * @param nif NIF do Passageiro
      * @param email email do Passageiro
      */

@@ -37,7 +37,7 @@ class DataProcessor {
     DataImporter dataImporter;      //!< DataImporter instance
     static int edgeID;              //!< static value for edgeID - starts at 1000000 so we never have conflicts with edges ID
     std::vector<int> tmpEdges;      //!< Temporary field for edges marked on the GUI framework
-    std::vector<Local> tmpPath;     //!< Temporary filed for path created by a builder function
+    std::vector<Place> tmpPath;     //!< Temporary filed for path created by a builder function
 public:
     /**
      * @brief DataProcessor Constructor

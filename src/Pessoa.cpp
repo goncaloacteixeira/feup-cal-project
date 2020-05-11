@@ -4,11 +4,11 @@
 Pessoa::Pessoa(const std::string &nome, unsigned int nif, const std::string &email) : nome(nome), nif(nif),
                                                                                       email(email) {}
 
-Local Pessoa::getOrigem() const {
+Place Pessoa::getOrigem() const {
     return origem;
 }
 
-Local Pessoa::getDestino() const {
+Place Pessoa::getDestino() const {
     return destino;
 }
 
@@ -24,7 +24,7 @@ std::string Pessoa::getEmail() const {
     return email;
 }
 
-std::vector<Local *> Pessoa::getDestinosFrequentes() const {
+std::vector<Place *> Pessoa::getDestinosFrequentes() const {
     return destinosFrequentes;
 }
 
