@@ -28,6 +28,12 @@ public:
      */
     std::vector<std::vector<std::string>> getData();
 
+    /**
+     * @brief Static method to parse a string with a delimiter
+     * @param s string to be parsed
+     * @param delimiter delimiter
+     * @return vector of elements parsed
+     */
     static std::vector<std::string> parseString(std::string s, std::string delimiter);
 };
 
