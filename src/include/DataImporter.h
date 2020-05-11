@@ -16,6 +16,7 @@
 
 /**
  * @brief Class DataImporter
+ *
  * This Class is responsible for importing the data from files into data structures.
  * It also assembles the graph on the GUI framework. (this is required if we are to process graph data)
  */
@@ -27,11 +28,13 @@ class DataImporter {
 
     /**
      * @brief Private Method to parse Edge Data
+     *
      * This method parses edge data into graph data structure
      */
     void parseEdges();
     /**
      * @brief Private Method to parse Node Data
+     *
      * This method parses node data into graph data structure
      */
     void parseNodes();
@@ -53,6 +56,7 @@ public:
 
     /**
      * @brief Method to parse file's data
+     *
      * This method creates a graph data structure and
      * calls DataImporter::parseEdges() and DataImporter::parseNodes()
      */
@@ -60,12 +64,14 @@ public:
 
     /**
      * @brief Method to assemble the graph
+     *
      * This method is required. It assembles the graph info into the GraphViewer
      */
     void viewGraph();
 
     /**
      * @brief Waiting input method
+     *
      * This method waits for the user to press any key. Useful if we want to see the data
      * assembled this far as the GraphViewer may not wait for other changes.
      */

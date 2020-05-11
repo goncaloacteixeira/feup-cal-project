@@ -9,6 +9,11 @@
 #include "DataImporter.h"
 
 /**
+ * @file DataProcessor.h
+ */
+
+/**
+ * @enum algorithm_t
  * @brief Enum data type for algorithms used on the project
  */
 typedef enum {
@@ -18,7 +23,9 @@ typedef enum {
 } algorithm_t;
 
 /**
+ * @enum point_t
  * @brief Enum data type for our points
+ *
  * This is useful to mark the nodes in our graphViewer as starting points,
  * stopping points and end points.
  */
@@ -30,6 +37,7 @@ typedef enum {
 
 /**
  * @brief DataProcessor Class
+ *
  * This class processes the data imported by DataImporter. In order properly use this class
  * we need to call DataImporter::viewGraph() so it can assemble the graph on the GraphViewer class.
  */
@@ -57,6 +65,7 @@ public:
      * @brief Function to mark a point on the framework
      * @param id    Node's ID to be marked
      * @param point Type of point to be marked
+     *
      * This function marks the points on the GUI Framework.
      * Red - END
      * Blue - STOP
@@ -104,6 +113,7 @@ public:
 
     /**
      * @brief Cleans the framework
+     *
      * This method cleans the path on the framework. It uses the tmpEdges and tmpPath to clear the path
      * assembled on the display. This is very useful when we want to draw many different paths on the GUI
      */
@@ -111,6 +121,7 @@ public:
 
     /**
      * @brief Waiting input method
+     *
      * This method waits for the user to press any key. Useful if we want to see the data
      * assembled this far as the GraphViewer may not wait for other changes.
      */
