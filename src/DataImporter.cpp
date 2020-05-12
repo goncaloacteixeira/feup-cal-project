@@ -32,7 +32,7 @@ void DataImporter::parseNodes() {
         ss >> unused;
         ss >> y;
 
-        this->graph.addVertex(Local(id, "null", x, y));
+        this->graph.addVertex(Place(id, "null", x, y));
     }
 }
 
@@ -55,11 +55,11 @@ void DataImporter::parseEdges() {
         ss >> id2;
         ss >> unused;
 
-        graph.addBidirectionalEdge(Local(id1), Local(id2), 1); /* the weight needs to be calculated for each type of road */
+        graph.addBidirectionalEdge(Place(id1), Place(id2), 1); /* the weight needs to be calculated for each type of road */
     }
 }
 
-Graph<Local> *DataImporter::getGraph() {
+Graph<Place> *DataImporter::getGraph() {
     return &this->graph;
 }
 
@@ -91,7 +91,7 @@ GraphViewer *DataImporter::getGraphViewer() const {
 }
 
 void DataImporter::parseData() {
-    this->graph = Graph<Local>();
+    this->graph = Graph<Place>();
     this->parseNodes();
     this->parseEdges();
 }

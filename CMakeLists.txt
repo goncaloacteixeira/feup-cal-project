@@ -12,9 +12,9 @@ include_directories(res)
 link_libraries(ws2_32 wsock32)
 
 add_executable(meetup-rider src/meetupRider.cpp
-        src/Carro.cpp src/include/Carro.h
-        src/Pessoa.cpp src/include/Pessoa.h
-        src/Local.cpp src/include/Local.h
+        src/Vehicle.cpp src/include/Vehicle.h
+        src/Person.cpp src/include/Person.h
+        src/Place.cpp src/include/Place.h
         src/lib/GraphViewer/connection.cpp src/lib/GraphViewer/graphviewer.cpp
         src/DataImporter.cpp src/include/DataImporter.h
         src/DataProcessor.cpp src/include/DataProcessor.h src/lib/CSVReader/CSVReader.cpp src/lib/CSVReader/CSVReader.h)

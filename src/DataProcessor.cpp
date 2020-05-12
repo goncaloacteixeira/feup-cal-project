@@ -15,11 +15,11 @@ void DataProcessor::computePaths(int source, algorithm_t algorithm) {
     switch (algorithm) {
         case bellmanford:
             std::cout << "Processing paths from " << source << " with Bellman Ford's Algorithm\n";
-            this->dataImporter.getGraph()->bellmanFordShortestPath(Local(source));
+            this->dataImporter.getGraph()->bellmanFordShortestPath(Place(source));
             break;
         case dijkstra:
             std::cout << "Processing paths from " << source << " with Dijkstra's Algorithm\n";
-            this->dataImporter.getGraph()->dijkstraShortestPath(Local(source));
+            this->dataImporter.getGraph()->dijkstraShortestPath(Place(source));
             break;
         case floydwarshall:
             std::cout << "Processing all pairs of paths with Floyd Warshall's Algorithm\n";
@@ -30,12 +30,12 @@ void DataProcessor::computePaths(int source, algorithm_t algorithm) {
 
 void DataProcessor::buildPath(int source, int destination, algorithm_t algorithm) {
     // needs to compute path first !
-    tmpPath = (algorithm != floydwarshall) ? this->dataImporter.getGraph()->getPath(Local(source), Local(destination)) :
-            this->dataImporter.getGraph()->getfloydWarshallPath(Local(source), Local(destination));
+    tmpPath = (algorithm != floydwarshall) ? this->dataImporter.getGraph()->getPath(Place(source), Place(destination)) :
+            this->dataImporter.getGraph()->getfloydWarshallPath(Place(source), Place(destination));
 
     this->tmpEdges.clear();
 
-    Vertex<Local> *vertex = nullptr;
+    Vertex<Place> *vertex = nullptr;
 
     for (const auto& v : tmpPath) {
         if (v.getId() != destination && v.getId() != source)
@@ -66,8 +66,8 @@ void DataProcessor::cleanup() {
 int DataProcessor::pathCost() {
     int result = 0;
     for (int i = 0; i < this->tmpPath.size() - 1; i++) {
-        Vertex<Local>* v1 = this->dataImporter.getGraph()->findVertex(tmpPath[i]);
-        Vertex<Local>* v2 = this->dataImporter.getGraph()->findVertex(tmpPath[i + 1]);
+        Vertex<Place>* v1 = this->dataImporter.getGraph()->findVertex(tmpPath[i]);
+        Vertex<Place>* v2 = this->dataImporter.getGraph()->findVertex(tmpPath[i + 1]);
         for (auto w : v1->getAdj())
             if (w.getDest() == v2)
                 result += w.getWeight();
@@ -114,9 +114,9 @@ std::vector<int> DataProcessor::completePath(std::vector<int> points) {
         double current_cost = INT16_MAX;
         for (int i = 1; i < points.size() - 1; i++) {
             if (i != index && std::find(worked.begin(), worked.end(), i) == worked.end()) {
-                if (current_cost > weightMatrix[this->dataImporter.getGraph()->findVertexIdx(Local(points[index]))][this->dataImporter.getGraph()->findVertexIdx(Local(points[i]))]) {
+                if (current_cost > weightMatrix[this->dataImporter.getGraph()->findVertexIdx(Place(points[index]))][this->dataImporter.getGraph()->findVertexIdx(Place(points[i]))]) {
                     current_index = i;
-                    current_cost = weightMatrix[this->dataImporter.getGraph()->findVertexIdx(Local(points[index]))][this->dataImporter.getGraph()->findVertexIdx(Local(points[i]))];
+                    current_cost = weightMatrix[this->dataImporter.getGraph()->findVertexIdx(Place(points[index]))][this->dataImporter.getGraph()->findVertexIdx(Place(points[i]))];
                 }
             }
         }
