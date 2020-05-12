@@ -5,6 +5,8 @@
 #ifndef MEETUP_RIDER_APPLICATION_H
 #define MEETUP_RIDER_APPLICATION_H
 
+#include <random>
+#include <time.h>
 #include "DataProcessor.h"
 #include "Person.h"
 #include "Vehicle.h"
@@ -37,6 +39,7 @@ public:
 
     void startRun(int driverVAT);
 
+    void cleanup();
 };
 
 

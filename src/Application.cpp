@@ -100,3 +100,32 @@ void Application::parsePassengers() {
     }
 }
 
+void Application::startRun(int driverVAT) {
+    auto driver = findDriver(driverVAT);
+    if (driver == nullptr)
+        return;
+
+    std::cout << "Starting run for " << driver->getName() << " as driver\n";
+
+    std::vector<int> points = { driver->getOrigin().getId() };
+
+    std::srand(time(nullptr));
+    for (int i = 0; i < driver->getVehicle().getCapacity() - 1; i++) {
+       int j = std::rand() % this->passengers.size();   // os passageiros são escolhidos aleatoriamente
+
+       std::cout << "Selecting " << this->passengers[j]->getName() << " as passenger\n";
+
+       points.emplace_back(this->passengers[j]->getOrigin().getId());
+       points.emplace_back(this->passengers[j]->getDestiny().getId());
+    }
+
+    points.emplace_back(driver->getDestiny().getId());
+
+    this->processor->completePath(points);
+    this->processor->wait();
+}
+
+void Application::cleanup() {
+    this->processor->cleanup();
+}
+

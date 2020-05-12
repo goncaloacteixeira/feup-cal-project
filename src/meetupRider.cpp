@@ -82,6 +82,8 @@ int main() {
                             "res/GridGraphs/16x16/nodes.txt", "res/GridGraphs/16x16/edges.txt");
 
     application.initGraph();
+    application.startRun(131123123);
+    application.cleanup();
 
 }
 
