@@ -60,6 +60,10 @@ public:
      * @return vector with most frequent destinies
      */
     std::vector<Place *> getFrequentDestinies() const;
+
+    void setOrigin(const Place &origin);
+
+    void setDestiny(const Place &destiny);
 };
 
 /**

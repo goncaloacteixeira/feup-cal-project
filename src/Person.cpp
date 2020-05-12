@@ -28,6 +28,14 @@ std::vector<Place *> Person::getFrequentDestinies() const {
     return frequentDestinies;
 }
 
+void Person::setOrigin(const Place &origin) {
+    Person::origin = origin;
+}
+
+void Person::setDestiny(const Place &destiny) {
+    Person::destiny = destiny;
+}
+
 
 Driver::Driver(const std::string &name, unsigned int vat, const std::string &email, Vehicle vehicle) : Person(name, vat, email), vehicle(vehicle) {
 }

@@ -1,17 +1,21 @@
 #include "include/Vehicle.h"
 
 
-int Vehicle::getLotacao() const {
-    return lotacao;
+int Vehicle::getCapacity() const {
+    return capacity;
 }
 
-std::string Vehicle::getModelo() const {
-    return modelo;
+std::string Vehicle::getModel() const {
+    return model;
 }
 
-std::string Vehicle::getMatricula() const {
-    return matricula;
+std::string Vehicle::getPlate() const {
+    return plate;
 }
 
-Vehicle::Vehicle(int lotacao, const std::string &modelo, const std::string &matricula) : lotacao(lotacao), modelo(modelo),
-                                                                                         matricula(matricula) {}
+Vehicle::Vehicle(int capacity, const std::string &model, const std::string &plate, int id) : capacity(capacity), model(model),
+                                                                                             plate(plate), id(id) {}
+
+int Vehicle::getId() const {
+    return id;
+}

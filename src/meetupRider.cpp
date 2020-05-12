@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include "DataProcessor.h"
+#include "Application.h"
 #include "CSVReader/CSVReader.h"
 
 // deprecated
@@ -70,12 +70,18 @@ void csvExample() {
 
 int main() {
     /*********************************************************************************
-     * *IMPORTANTE* - mudar a working directory do CLion para a raiz do repositório. *
+     *  IMPORTANTE - mudar a working directory do CLion para a raiz do repositório.  *
      *********************************************************************************/
 
     /* descomentar a linha seguinte para ver o exemplo para um grafo de grelha de 16x16 */
-    graphViz16();
+    // graphViz16();
 
     // csvExample();
+
+    Application application("res/csvFiles/drivers.csv", "res/csvFiles/passengers.csv", "res/csvFiles/cars.csv",
+                            "res/GridGraphs/16x16/nodes.txt", "res/GridGraphs/16x16/edges.txt");
+
+    application.initGraph();
+
 }
 
