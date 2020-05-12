@@ -123,6 +123,8 @@ void Application::startRun(int driverVAT) {
 
     this->processor->completePath(points);
     this->processor->wait();
+
+    // TODO - implementar um sistema que tenha em conta as horas de saída dos passageiros.
 }
 
 void Application::cleanup() {
