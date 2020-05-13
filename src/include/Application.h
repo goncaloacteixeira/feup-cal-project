@@ -34,12 +34,23 @@ public:
     Application(const string &driversFile, const string &passengersFile, const string &vehiclesFile,
                 const string &nodesFile, const string &edgesFile);
 
-    void initGraph();
+    void parseData();
 
+    void initGraph();
 
     void startRun(int driverVAT);
 
     void cleanup();
+
+    void exportPassengers(std::string filename);
+    void exportDrivers(std::string filename);
+    void exportVehicles(std::string filename);
+
+    bool addPassenger(Passenger* passenger);
+    bool addDriver(Driver* driver);
+    bool addVehicle(Vehicle* vehicle);
+
+
 };
 
 

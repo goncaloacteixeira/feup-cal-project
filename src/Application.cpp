@@ -12,11 +12,13 @@ Application::Application(const string &driversFile, const string &passengersFile
     this->processor = new DataProcessor(DataImporter(nodesFile, edgesFile));
 }
 
-void Application::initGraph() {
+void Application::parseData() {
     this->parseVehicles();
     this->parseDrivers();
     this->parsePassengers();
+}
 
+void Application::initGraph() {
     this->processor->getDataImporter().parseData();
     this->processor->getDataImporter().viewGraph();
     this->processor->getDataImporter().wait();
@@ -130,4 +132,72 @@ void Application::startRun(int driverVAT) {
 void Application::cleanup() {
     this->processor->cleanup();
 }
+
+bool Application::addPassenger(Passenger *passenger) {
+    if (this->findPassenger(passenger->getVAT()) != nullptr)
+        return false;
+    this->passengers.push_back(passenger);
+    return true;
+}
+
+bool Application::addDriver(Driver *driver) {
+    if (this->findDriver(driver->getVAT()) != nullptr)
+        return false;
+    this->drivers.push_back(driver);
+    return true;
+}
+
+bool Application::addVehicle(Vehicle *vehicle) {
+    if (this->findVehicle(vehicle->getId()) != nullptr)
+        return false;
+    this->vehicles.push_back(vehicle);
+    return true;
+}
+
+void Application::exportPassengers(std::string filename) {
+    std::fstream fs(filename, std::fstream::out | std::fstream::trunc);
+    if (fs.is_open()) {
+        fs << "name,vat,email,source,destination" << std::endl;
+        for (auto passenger : this->passengers) {
+            fs << passenger->getName() << ",";
+            fs << passenger->getVAT() << ",";
+            fs << passenger->getEmail() << ",";
+            fs << passenger->getOrigin().getId() << ",";
+            fs << passenger->getDestiny().getId() << "\n";
+        }
+        fs.close();
+    }
+}
+
+void Application::exportDrivers(std::string filename) {
+    std::fstream fs(filename, std::fstream::out | std::fstream::trunc);
+    if (fs.is_open()) {
+        fs << "name,vat,email,source,destination,car" << std::endl;
+        for (auto driver : this->drivers) {
+            fs << driver->getName() << ",";
+            fs << driver->getVAT() << ",";
+            fs << driver->getEmail() << ",";
+            fs << driver->getOrigin().getId() << ",";
+            fs << driver->getDestiny().getId() << ",";
+            fs << driver->getVehicle().getId() << "\n";
+        }
+        fs.close();
+    }
+}
+
+void Application::exportVehicles(std::string filename) {
+    std::fstream fs(filename, std::fstream::out | std::fstream::trunc);
+    if (fs.is_open()) {
+        fs << "capacity,model,registration,id" << std::endl;
+        for (auto vehicle : this->vehicles) {
+            fs << vehicle->getCapacity() << ",";
+            fs << vehicle->getModel() << ",";
+            fs << vehicle->getPlate() << ",";
+            fs << vehicle->getId() << "\n";
+        }
+        fs.close();
+    }
+}
+
+
 

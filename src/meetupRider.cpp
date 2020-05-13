@@ -81,6 +81,8 @@ int main() {
     Application application("res/csvFiles/drivers.csv", "res/csvFiles/passengers.csv", "res/csvFiles/cars.csv",
                             "res/GridGraphs/16x16/nodes.txt", "res/GridGraphs/16x16/edges.txt");
 
+    application.parseData();
+
     application.initGraph();
     application.startRun(112211221);
     application.cleanup();
