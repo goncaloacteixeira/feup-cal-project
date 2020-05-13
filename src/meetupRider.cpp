@@ -41,6 +41,7 @@ void graphViz8() {
     dataImporter.getGraphViewer()->closeWindow();
 }
 
+/* deprecated */
 void graphViz16() {
     DataImporter dataImporter("res/GridGraphs/16x16/nodes.txt", "res/GridGraphs/16x16/edges.txt");
     dataImporter.parseData();
@@ -52,20 +53,6 @@ void graphViz16() {
     dataProcessor.wait();
 
     dataImporter.getGraphViewer()->closeWindow();
-}
-
-/* para quem for utilizar ficheiros csv */
-void csvExample() {
-    CSVReader csvReader("res/csvFiles/example.csv", ",");
-    auto data = csvReader.getData();
-
-    std::cout << "id\tname\tage\tnode\n";
-    std::cout << "-----------------------------\n";
-    for (auto line : data) {
-        for (auto value : line)
-            std::cout << value << "\t";
-        std::cout << std::endl;
-    }
 }
 
 int main() {
@@ -96,6 +83,4 @@ int main() {
     };
     application.startRun(112211221, &passengers);
     application.cleanup();
-
 }
-
