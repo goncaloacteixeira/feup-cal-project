@@ -13,34 +13,37 @@
  * @brief Classe Vehicle
  */
 class Vehicle {
-    int lotacao;                //!< lotação do vehicle
-    std::string modelo;         //!< modelo do vehicle
-    std::string matricula;      //!< matricula do vehicle
+    int capacity;                //!< lotação do vehicle
+    std::string model;         //!< modelo do vehicle
+    std::string plate;      //!< matricula do vehicle
+    int id;
 public:
     /**
      * @brief Construtor da classe Vehicle
-     * @param lotacao lotação do vehicle
-     * @param modelo modelo do vehicle
-     * @param matricula matricula do vehicle
+     * @param capacity lotação do vehicle
+     * @param model model do vehicle
+     * @param plate plate do vehicle
      */
-    Vehicle(int lotacao, const std::string &modelo, const std::string &matricula);
+    Vehicle(int capacity, const std::string &model, const std::string &plate, int id);
 
     /**
      * @brief Método GET para lotação
      * @return lotação do vehicle
      */
-    int getLotacao() const;
+    int getCapacity() const;
 
     /**
      * @brief Método GET para modelo
      * @return modelo do vehicle
      */
-    std::string getModelo() const;
+    std::string getModel() const;
 
     /**
      * @brief Método GET para matrícula
      * @return matricula do vehicle
      */
-    std::string getMatricula() const;
+    std::string getPlate() const;
+
+    int getId() const;
 };
 #endif //UNTITLED1_CARRO_H

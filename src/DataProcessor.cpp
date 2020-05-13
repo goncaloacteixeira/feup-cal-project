@@ -163,6 +163,10 @@ std::vector<int> DataProcessor::fastestPath(std::vector<int> points, algorithm_t
     return path;
 }
 
+DataImporter &DataProcessor::getDataImporter() {
+    return dataImporter;
+}
+
 
 
 

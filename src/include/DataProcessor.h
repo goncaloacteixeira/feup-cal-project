@@ -126,6 +126,8 @@ public:
      * assembled this far as the GraphViewer may not wait for other changes.
      */
     void wait();
+
+    DataImporter &getDataImporter();
 };
 
 

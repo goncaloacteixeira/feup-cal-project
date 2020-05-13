@@ -2,10 +2,7 @@
 // Created by skidr on 06/05/2020.
 //
 
-#include <iostream>
-
-#include "DataProcessor.h"
-#include "CSVReader/CSVReader.h"
+#include "Application.h"
 
 // deprecated
 void graphViz4() {
@@ -41,6 +38,7 @@ void graphViz8() {
     dataImporter.getGraphViewer()->closeWindow();
 }
 
+/* deprecated */
 void graphViz16() {
     DataImporter dataImporter("res/GridGraphs/16x16/nodes.txt", "res/GridGraphs/16x16/edges.txt");
     dataImporter.parseData();
@@ -54,28 +52,32 @@ void graphViz16() {
     dataImporter.getGraphViewer()->closeWindow();
 }
 
-/* para quem for utilizar ficheiros csv */
-void csvExample() {
-    CSVReader csvReader("res/csvFiles/example.csv", ",");
-    auto data = csvReader.getData();
-
-    std::cout << "id\tname\tage\tnode\n";
-    std::cout << "-----------------------------\n";
-    for (auto line : data) {
-        for (auto value : line)
-            std::cout << value << "\t";
-        std::cout << std::endl;
-    }
-}
-
 int main() {
     /*********************************************************************************
-     * *IMPORTANTE* - mudar a working directory do CLion para a raiz do repositório. *
+     *  IMPORTANTE - mudar a working directory do CLion para a raiz do repositório.  *
      *********************************************************************************/
 
     /* descomentar a linha seguinte para ver o exemplo para um grafo de grelha de 16x16 */
-    graphViz16();
+    // graphViz16();
 
     // csvExample();
-}
 
+    Application application("res/csvFiles/drivers.csv", "res/csvFiles/passengers.csv", "res/csvFiles/cars.csv",
+                            "res/GridGraphs/16x16/nodes.txt", "res/GridGraphs/16x16/edges.txt");
+
+    application.parseData();
+
+    application.initGraph();
+    /* selecting driver with vat 112211221 and random passengers for his vehicle */
+    application.startRun(112211221);
+    application.cleanup();
+
+    /* selecting driver with vat 112211221 and specific passengers */
+    std::vector<int> passengers = {
+            345676554,
+            234234768,
+            234587657,
+    };
+    application.startRun(112211221, &passengers);
+    application.cleanup();
+}
