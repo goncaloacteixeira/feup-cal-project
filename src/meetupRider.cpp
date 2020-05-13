@@ -2,10 +2,7 @@
 // Created by skidr on 06/05/2020.
 //
 
-#include <iostream>
-
 #include "Application.h"
-#include "CSVReader/CSVReader.h"
 
 // deprecated
 void graphViz4() {
