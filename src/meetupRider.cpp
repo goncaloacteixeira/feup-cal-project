@@ -84,7 +84,17 @@ int main() {
     application.parseData();
 
     application.initGraph();
+    /* selecting driver with vat 112211221 and random passengers for his vehicle */
     application.startRun(112211221);
+    application.cleanup();
+
+    /* selecting driver with vat 112211221 and specific passengers */
+    std::vector<int> passengers = {
+            345676554,
+            234234768,
+            234587657,
+    };
+    application.startRun(112211221, &passengers);
     application.cleanup();
 
 }

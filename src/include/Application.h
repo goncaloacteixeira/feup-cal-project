@@ -39,6 +39,7 @@ public:
     void initGraph();
 
     void startRun(int driverVAT);
+    void startRun(int driverVAT, std::vector<int>* passengersVAT);
 
     void cleanup();
 

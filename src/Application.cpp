@@ -129,6 +129,33 @@ void Application::startRun(int driverVAT) {
     // TODO - implementar um sistema que tenha em conta as horas de saída dos passageiros.
 }
 
+void Application::startRun(int driverVAT, std::vector<int>* passengersVAT) {
+    auto driver = findDriver(driverVAT);
+    if (driver == nullptr)
+        return;
+
+    std::cout << "Starting run for " << driver->getName() << " as driver\n";
+
+    std::vector<int> points = { driver->getOrigin().getId() };
+
+    for (int passVAT : *passengersVAT) {
+        auto passenger = this->findPassenger(passVAT);
+        if (passenger == nullptr)
+            continue;
+
+        std::cout << "Selecting " << passenger->getName() << " as passenger\n";
+
+        points.emplace_back(passenger->getOrigin().getId());
+        points.emplace_back(passenger->getDestiny().getId());
+    }
+
+    points.emplace_back(driver->getDestiny().getId());
+
+    this->processor->completePath(points);
+    this->processor->wait();
+}
+
+
 void Application::cleanup() {
     this->processor->cleanup();
 }
@@ -198,6 +225,3 @@ void Application::exportVehicles(std::string filename) {
         fs.close();
     }
 }
-
-
-
