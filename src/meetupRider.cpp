@@ -12,10 +12,10 @@ void graphViz4() {
 
     DataProcessor dataProcessor(dataImporter);
     dataProcessor.computePaths(0, dijkstra);
-    dataProcessor.buildPath(0, 12, dijkstra);
+    dataProcessor.buildPath(0, 12);
     dataProcessor.cleanup();
     dataProcessor.computePaths(0, bellmanford);
-    dataProcessor.buildPath(0, 12, bellmanford);
+    dataProcessor.buildPath(0, 12);
     dataProcessor.cleanup();
 
     dataImporter.getGraphViewer()->closeWindow();
@@ -29,10 +29,10 @@ void graphViz8() {
 
     DataProcessor dataProcessor(dataImporter);
     dataProcessor.computePaths(0, dijkstra);
-    dataProcessor.buildPath(0, 49, dijkstra);
+    dataProcessor.buildPath(0, 49);
     dataProcessor.cleanup();
     dataProcessor.computePaths(0, bellmanford);
-    dataProcessor.buildPath(0, 49, bellmanford);
+    dataProcessor.buildPath(0, 49);
     dataProcessor.cleanup();
 
     dataImporter.getGraphViewer()->closeWindow();
@@ -52,16 +52,7 @@ void graphViz16() {
     dataImporter.getGraphViewer()->closeWindow();
 }
 
-int main() {
-    /*********************************************************************************
-     *  IMPORTANTE - mudar a working directory do CLion para a raiz do repositório.  *
-     *********************************************************************************/
-
-    /* descomentar a linha seguinte para ver o exemplo para um grafo de grelha de 16x16 */
-    // graphViz16();
-
-    // csvExample();
-
+void app() {
     Application application("res/csvFiles/drivers.csv", "res/csvFiles/passengers.csv", "res/csvFiles/cars.csv",
                             "res/GridGraphs/16x16/nodes.txt", "res/GridGraphs/16x16/edges.txt");
 
@@ -80,4 +71,14 @@ int main() {
     };
     application.startRun(112211221, &passengers);
     application.cleanup();
+}
+
+int main() {
+    /*********************************************************************************
+     *  IMPORTANTE - mudar a working directory do CLion para a raiz do repositório.  *
+     *********************************************************************************/
+
+    /* descomentar a linha seguinte para ver o exemplo para um grafo de grelha de 16x16 */
+
+    app();
 }

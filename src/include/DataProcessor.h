@@ -8,6 +8,9 @@
 #include "Graph.h"
 #include "DataImporter.h"
 
+#define PLUS_INF std::numeric_limits<double>::max()
+#define MINUS_INF std::numeric_limits<double>::min()
+
 /**
  * @file DataProcessor.h
  */
@@ -59,7 +62,7 @@ public:
      * @param destination   Ending Node's ID
      * @param algorithm     Algorithm to be used to build shortest path from source to destination
      */
-    void buildPath(int source, int destination, algorithm_t algorithm);
+    void buildPath(int source, int destination);
 
     /**
      * @brief Function to mark a point on the framework
@@ -83,6 +86,10 @@ public:
      * This function should be called before DataProcessor::buildPath().
      */
     void computePaths(int source, algorithm_t algorithm);
+
+    void pathAtoB(int source, int destination, algorithm_t algorithm);
+
+    int updateTmpPath(int source, int destination, algorithm_t algorithm);
 
     /**
      * @brief Method to assemble the best path from A to B, passing on a set of points
