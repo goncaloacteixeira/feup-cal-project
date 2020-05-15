@@ -59,7 +59,7 @@ void DataImporter::parseEdges() {
     }
 }
 
-Graph<Place> *DataImporter::getGraph() {
+Graph *DataImporter::getGraph() {
     return &this->graph;
 }
 
@@ -91,7 +91,7 @@ GraphViewer *DataImporter::getGraphViewer() const {
 }
 
 void DataImporter::parseData() {
-    this->graph = Graph<Place>();
+    this->graph = Graph();
     this->parseNodes();
     this->parseEdges();
 }

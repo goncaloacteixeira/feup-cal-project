@@ -102,7 +102,7 @@ void Application::parsePassengers() {
     }
 }
 
-void Application::startRun(int driverVAT) {
+void Application::startRun(int driverVAT, algorithm_t algorithm) {
     auto driver = findDriver(driverVAT);
     if (driver == nullptr)
         return;
@@ -123,13 +123,13 @@ void Application::startRun(int driverVAT) {
 
     points.emplace_back(driver->getDestiny().getId());
 
-    this->processor->completePath(points);
+    this->processor->completePath(points, algorithm);
     this->processor->wait();
 
     // TODO - implementar um sistema que tenha em conta as horas de saída dos passageiros.
 }
 
-void Application::startRun(int driverVAT, std::vector<int>* passengersVAT) {
+void Application::startRun(int driverVAT, std::vector<int> *passengersVAT, algorithm_t algorithm) {
     auto driver = findDriver(driverVAT);
     if (driver == nullptr)
         return;
@@ -151,7 +151,7 @@ void Application::startRun(int driverVAT, std::vector<int>* passengersVAT) {
 
     points.emplace_back(driver->getDestiny().getId());
 
-    this->processor->completePath(points);
+    this->processor->completePath(points, algorithm);
     this->processor->wait();
 }
 

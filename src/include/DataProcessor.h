@@ -100,6 +100,8 @@ public:
      */
     std::vector<int> completePath(std::vector<int> points);
 
+    std::vector<int> completePath(std::vector<int> points, algorithm_t algorithm);
+
     /**
      * @brief Method to assemble the best path from A to B, marking all stopping points on the way
      * @param points        Vector containing all the points. { START, STOP, STOP, [...], END }

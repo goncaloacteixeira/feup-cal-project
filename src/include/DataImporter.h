@@ -23,7 +23,7 @@
 class DataImporter {
     std::string nodesFilename;  //!< Nodes file name
     std::string edgesFilename;  //!< Edges file name
-    Graph<Place> graph;         //!< Graph Data Structure
+    Graph graph;         //!< Graph Data Structure
     GraphViewer* graphViewer;   //!< GraphViewer GUI Framework
 
     /**
@@ -52,7 +52,7 @@ public:
      * @brief GET Method for graph data structure
      * @return Pointer to the graph
      */
-    Graph<Place>* getGraph();
+    Graph* getGraph();
 
     /**
      * @brief Method to parse file's data

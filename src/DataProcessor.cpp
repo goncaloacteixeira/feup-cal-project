@@ -36,9 +36,7 @@ int DataProcessor::updateTmpPath(int source, int destination, algorithm_t algori
 }
 
 void DataProcessor::buildPath(int source, int destination) {
-    this->tmpEdges.clear();
-
-    Vertex<Place> *vertex = nullptr;
+    Vertex *vertex = nullptr;
 
     for (const auto& v : tmpPath) {
         if (v.getId() != destination && v.getId() != source)
@@ -59,18 +57,20 @@ void DataProcessor::buildPath(int source, int destination) {
 }
 
 void DataProcessor::cleanup() {
-    for (auto v : tmpPath)
-        this->dataImporter.getGraphViewer()->clearVertexColor(v.getId());
+    for (auto v : this->getDataImporter().getGraph()->getVertexSet())
+        this->dataImporter.getGraphViewer()->clearVertexColor(v->getInfo().getId());
     for (int i = 0; i < tmpEdges.size(); i++)
         this->dataImporter.getGraphViewer()->removeEdge(tmpEdges[i]);
     this->dataImporter.getGraphViewer()->rearrange();
+
+    this->tmpEdges.clear();
 }
 
 int DataProcessor::pathCost() {
     int result = 0;
     for (int i = 0; i < this->tmpPath.size() - 1; i++) {
-        Vertex<Place>* v1 = this->dataImporter.getGraph()->findVertex(tmpPath[i]);
-        Vertex<Place>* v2 = this->dataImporter.getGraph()->findVertex(tmpPath[i + 1]);
+        Vertex* v1 = this->dataImporter.getGraph()->findVertex(tmpPath[i]);
+        Vertex* v2 = this->dataImporter.getGraph()->findVertex(tmpPath[i + 1]);
         for (auto w : v1->getAdj())
             if (w.getDest() == v2)
                 result += w.getWeight();
@@ -132,6 +132,54 @@ std::vector<int> DataProcessor::completePath(std::vector<int> points) {
     }
 
     updateTmpPath(points[index], points[points.size() - 1], floydwarshall);
+    buildPath(points[index], points[points.size() - 1]);
+    path.push_back(points[points.size() - 1]);
+
+    this->markPoint(points[0], START);
+    for (int i = 1; i < points.size() -1 ; i++)
+        this->markPoint(points[i], STOP);
+    this->markPoint(points[points.size() - 1], END);
+
+
+    std::cout << "The path is: ";
+    for (int i = 0; i < path.size() - 1; i++)
+        std::cout << std::to_string(path[i]) << " -> ";
+    std::cout << std::to_string(path[path.size() - 1]) << std::endl;
+
+    return path;
+}
+
+std::vector<int> DataProcessor::completePath(std::vector<int> points, algorithm_t algorithm) {
+    int index = 0;
+    int current_index = 0;
+    int edges_worked = 0;
+    std::vector<int> worked;
+    worked.push_back(index);
+
+    std::vector<int> path;
+    path.push_back(points[0]);
+
+    while (edges_worked < points.size() - 2) {
+        this->computePaths(points[index], algorithm);
+        double current_cost = PLUS_INF;
+        for (int i = 1; i < points.size() - 1; i++) {
+            if (i != index && std::find(worked.begin(), worked.end(), i) == worked.end()) {
+                int cost = this->updateTmpPath(points[index], points[i], algorithm);
+                if (current_cost > cost) {
+                    current_index = i;
+                    current_cost = cost;
+                }
+            }
+        }
+        updateTmpPath(points[index], points[current_index], algorithm);
+        buildPath(points[index], points[current_index]);
+        index = current_index;
+        path.push_back(points[index]);
+        worked.push_back(index);
+        edges_worked++;
+    }
+    this->computePaths(points[index], algorithm);
+    updateTmpPath(points[index], points[points.size() - 1], algorithm);
     buildPath(points[index], points[points.size() - 1]);
     path.push_back(points[points.size() - 1]);
 

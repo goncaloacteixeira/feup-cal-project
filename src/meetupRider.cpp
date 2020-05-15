@@ -60,7 +60,7 @@ void app() {
 
     application.initGraph();
     /* selecting driver with vat 112211221 and random passengers for his vehicle */
-    application.startRun(112211221);
+    application.startRun(112211221, dijkstra);
     application.cleanup();
 
     /* selecting driver with vat 112211221 and specific passengers */
@@ -69,7 +69,7 @@ void app() {
             234234768,
             234587657,
     };
-    application.startRun(112211221, &passengers);
+    application.startRun(112211221, &passengers, bellmanford);
     application.cleanup();
 }
 
