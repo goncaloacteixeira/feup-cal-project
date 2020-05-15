@@ -17,4 +17,4 @@ add_executable(meetup-rider src/meetupRider.cpp
         src/Place.cpp src/include/Place.h
         src/lib/GraphViewer/connection.cpp src/lib/GraphViewer/graphviewer.cpp
         src/DataImporter.cpp src/include/DataImporter.h
-        src/DataProcessor.cpp src/include/DataProcessor.h src/lib/CSVReader/CSVReader.cpp src/lib/CSVReader/CSVReader.h src/Application.cpp src/include/Application.h)
+        src/DataProcessor.cpp src/include/DataProcessor.h src/lib/CSVReader/CSVReader.cpp src/lib/CSVReader/CSVReader.h src/Application.cpp src/include/Application.h src/Graph.cpp)

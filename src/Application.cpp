@@ -5,11 +5,11 @@
 #include "Application.h"
 
 Application::Application(const string &driversFile, const string &passengersFile, const string &vehiclesFile,
-                         const string &nodesFile, const string &edgesFile) {
+                         DataProcessor* processor) {
     this->driversFile = driversFile;
     this->passengersFile = passengersFile;
     this->vehiclesFile = vehiclesFile;
-    this->processor = new DataProcessor(DataImporter(nodesFile, edgesFile));
+    this->processor = processor;
 }
 
 void Application::parseData() {
@@ -102,7 +102,7 @@ void Application::parsePassengers() {
     }
 }
 
-void Application::startRun(int driverVAT) {
+void Application::startRun(int driverVAT, algorithm_t algorithm) {
     auto driver = findDriver(driverVAT);
     if (driver == nullptr)
         return;
@@ -123,13 +123,13 @@ void Application::startRun(int driverVAT) {
 
     points.emplace_back(driver->getDestiny().getId());
 
-    this->processor->completePath(points);
+    this->processor->completePath(points, algorithm);
     this->processor->wait();
 
     // TODO - implementar um sistema que tenha em conta as horas de saída dos passageiros.
 }
 
-void Application::startRun(int driverVAT, std::vector<int>* passengersVAT) {
+void Application::startRun(int driverVAT, std::vector<int> *passengersVAT, algorithm_t algorithm) {
     auto driver = findDriver(driverVAT);
     if (driver == nullptr)
         return;
@@ -151,7 +151,10 @@ void Application::startRun(int driverVAT, std::vector<int>* passengersVAT) {
 
     points.emplace_back(driver->getDestiny().getId());
 
-    this->processor->completePath(points);
+    if (algorithm != floydwarshall)
+        this->processor->completePath(points, algorithm);
+    else
+        this->processor->completePath(points);
     this->processor->wait();
 }
 

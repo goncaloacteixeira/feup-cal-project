@@ -45,7 +45,7 @@ public:
      * @param edgesFile         edges filename
      */
     Application(const string &driversFile, const string &passengersFile, const string &vehiclesFile,
-                const string &nodesFile, const string &edgesFile);
+                DataProcessor* processor);
 
     /**
      * @brief Parses data (call all parsing data methods)
@@ -66,17 +66,18 @@ public:
      * This method builds a path from driver's origin to their destination,
      * selecting random passengers to fill their vehicle.
      */
-    void startRun(int driverVAT);
+    void startRun(int driverVAT, algorithm_t algorithm);
 
     /**
      * @brief Ride starter for a driver VAT - driverVAT (2)
      * @param driverVAT         driver's VAT number
      * @param passengersVAT     vector with passengers' VAT number
+     * @param algorithm         algorithm to be used
      *
      * This method builds a path from driver's origin to their destination,
      * selecting all passengers passed on second argument.
      */
-    void startRun(int driverVAT, std::vector<int>* passengersVAT);
+    void startRun(int driverVAT, std::vector<int> *passengersVAT, algorithm_t algorithm);
 
     /**
      * @brief Cleanup assembled path
