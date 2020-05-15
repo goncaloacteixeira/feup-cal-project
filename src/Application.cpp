@@ -5,11 +5,11 @@
 #include "Application.h"
 
 Application::Application(const string &driversFile, const string &passengersFile, const string &vehiclesFile,
-                         const string &nodesFile, const string &edgesFile) {
+                         DataProcessor* processor) {
     this->driversFile = driversFile;
     this->passengersFile = passengersFile;
     this->vehiclesFile = vehiclesFile;
-    this->processor = new DataProcessor(DataImporter(nodesFile, edgesFile));
+    this->processor = processor;
 }
 
 void Application::parseData() {

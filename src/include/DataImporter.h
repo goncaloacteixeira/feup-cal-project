@@ -14,6 +14,11 @@
 #include "GraphViewer/graphviewer.h"
 #include "Graph.h"
 
+typedef enum {
+    NODES,
+    EDGES,
+} data_t ;
+
 /**
  * @brief Class DataImporter
  *
@@ -25,6 +30,11 @@ class DataImporter {
     std::string edgesFilename;  //!< Edges file name
     Graph graph;         //!< Graph Data Structure
     GraphViewer* graphViewer;   //!< GraphViewer GUI Framework
+
+    bool real_maps;
+    int width;
+    int height;
+    double maxX,maxY,minX,minY;
 
     /**
      * @brief Private Method to parse Edge Data
@@ -38,6 +48,8 @@ class DataImporter {
      * This method parses node data into graph data structure
      */
     void parseNodes();
+
+    static std::string build_path(std::string city, data_t data);
 public:
     /**
      * @brief DataImporter Constructor
@@ -47,6 +59,8 @@ public:
      * This constructor creates a GraphViewer instance
      */
     DataImporter(const std::string &nodesFilename, const std::string &edgesFilename);
+
+    DataImporter(int width, int height, std::string city);
 
     /**
      * @brief GET Method for graph data structure

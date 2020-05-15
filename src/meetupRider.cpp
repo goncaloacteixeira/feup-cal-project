@@ -4,73 +4,24 @@
 
 #include "Application.h"
 
-// deprecated
-void graphViz4() {
-    DataImporter dataImporter("res/GridGraphs/4x4/nodes.txt", "res/GridGraphs/4x4/edges.txt");
-    dataImporter.parseData();
-    dataImporter.viewGraph();
-
-    DataProcessor dataProcessor(dataImporter);
-    dataProcessor.computePaths(0, dijkstra);
-    dataProcessor.buildPath(0, 12);
-    dataProcessor.cleanup();
-    dataProcessor.computePaths(0, bellmanford);
-    dataProcessor.buildPath(0, 12);
-    dataProcessor.cleanup();
-
-    dataImporter.getGraphViewer()->closeWindow();
-}
-
-// deprecated
-void graphViz8() {
-    DataImporter dataImporter("res/GridGraphs/8x8/nodes.txt", "res/GridGraphs/8x8/edges.txt");
-    dataImporter.parseData();
-    dataImporter.viewGraph();
-
-    DataProcessor dataProcessor(dataImporter);
-    dataProcessor.computePaths(0, dijkstra);
-    dataProcessor.buildPath(0, 49);
-    dataProcessor.cleanup();
-    dataProcessor.computePaths(0, bellmanford);
-    dataProcessor.buildPath(0, 49);
-    dataProcessor.cleanup();
-
-    dataImporter.getGraphViewer()->closeWindow();
-}
-
-/* deprecated */
-void graphViz16() {
-    DataImporter dataImporter("res/GridGraphs/16x16/nodes.txt", "res/GridGraphs/16x16/edges.txt");
-    dataImporter.parseData();
-    dataImporter.viewGraph();
-    dataImporter.wait();
-
-    DataProcessor dataProcessor(dataImporter);
-    auto path = dataProcessor.completePath(std::vector<int>{0, 160, 10, 108, 225, 164, 182, 284});
-    dataProcessor.wait();
-
-    dataImporter.getGraphViewer()->closeWindow();
-}
-
 void app() {
-    Application application("res/csvFiles/drivers.csv", "res/csvFiles/passengers.csv", "res/csvFiles/cars.csv",
-                            "res/GridGraphs/16x16/nodes.txt", "res/GridGraphs/16x16/edges.txt");
+    DataImporter importer(1920, 1080, "Ermesinde");
+    importer.parseData();
+    importer.viewGraph();
+    importer.wait();
+    DataProcessor* processor = new DataProcessor(importer);
 
-    application.parseData();
-
-    application.initGraph();
-    /* selecting driver with vat 112211221 and random passengers for his vehicle */
-    application.startRun(112211221, dijkstra);
-    application.cleanup();
-
-    /* selecting driver with vat 112211221 and specific passengers */
-    std::vector<int> passengers = {
-            345676554,
-            234234768,
-            234587657,
+    std::vector<int> points = {
+        1174117027,
+        1173439995,
+        1155513067,
+        1159071653,
+        1185825965,
+        1173452747,
     };
-    application.startRun(112211221, &passengers, bellmanford);
-    application.cleanup();
+
+    processor->completePath(points, bellmanford);
+    processor->wait();
 }
 
 int main() {

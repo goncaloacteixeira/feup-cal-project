@@ -45,7 +45,7 @@ public:
      * @param edgesFile         edges filename
      */
     Application(const string &driversFile, const string &passengersFile, const string &vehiclesFile,
-                const string &nodesFile, const string &edgesFile);
+                DataProcessor* processor);
 
     /**
      * @brief Parses data (call all parsing data methods)
