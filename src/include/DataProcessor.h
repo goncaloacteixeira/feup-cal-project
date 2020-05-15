@@ -87,8 +87,21 @@ public:
      */
     void computePaths(int source, algorithm_t algorithm);
 
+    /**
+     * @brief useful function to check how to make calls
+     * @param source        source
+     * @param destination   destination
+     * @param algorithm     algorithm to be used
+     */
     void pathAtoB(int source, int destination, algorithm_t algorithm);
 
+    /**
+     * @brief Function to update tmpPath vector
+     * @param source
+     * @param destination
+     * @param algorithm
+     * @return path cost
+     */
     int updateTmpPath(int source, int destination, algorithm_t algorithm);
 
     /**
@@ -100,6 +113,14 @@ public:
      */
     std::vector<int> completePath(std::vector<int> points);
 
+    /**
+     * @brief Method to assemble the best path from A to B, passing on a set of points
+     * @param points Vector containing all the points. { START, STOP, STOP, [...], END }
+     * @param algorithm Algorithm to be used
+     * @return returns a vector with the path ordered
+     *
+     * This method does not require calling DataProcessor::computePaths() before.
+     */
     std::vector<int> completePath(std::vector<int> points, algorithm_t algorithm);
 
     /**

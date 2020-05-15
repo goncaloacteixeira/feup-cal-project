@@ -151,7 +151,10 @@ void Application::startRun(int driverVAT, std::vector<int> *passengersVAT, algor
 
     points.emplace_back(driver->getDestiny().getId());
 
-    this->processor->completePath(points, algorithm);
+    if (algorithm != floydwarshall)
+        this->processor->completePath(points, algorithm);
+    else
+        this->processor->completePath(points);
     this->processor->wait();
 }
 

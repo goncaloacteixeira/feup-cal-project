@@ -72,6 +72,7 @@ public:
      * @brief Ride starter for a driver VAT - driverVAT (2)
      * @param driverVAT         driver's VAT number
      * @param passengersVAT     vector with passengers' VAT number
+     * @param algorithm         algorithm to be used
      *
      * This method builds a path from driver's origin to their destination,
      * selecting all passengers passed on second argument.
