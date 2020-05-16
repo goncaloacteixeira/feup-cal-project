@@ -5,23 +5,16 @@
 #include "Application.h"
 
 void app() {
-    DataImporter importer(1920, 1080, "Ermesinde");
+    DataImporter importer(1920, 1080, "California");
     importer.parseData();
     importer.viewGraph();
     importer.wait();
-    DataProcessor* processor = new DataProcessor(importer);
 
-    std::vector<int> points = {
-        1174117027,
-        1173439995,
-        1155513067,
-        1159071653,
-        1185825965,
-        1173452747,
-    };
-
-    processor->completePath(points, bellmanford);
-    processor->wait();
+    DataProcessor processor(importer);
+    processor.completePath(std::vector<int> {
+        264, 154, 1241, 555, 5402,
+    }, dijkstra);
+    processor.wait();
 }
 
 int main() {

@@ -14,8 +14,8 @@ std::string toLower(std::string string) {
 
 std::string DataImporter::build_path(std::string city, data_t data) {
     switch (data) {
-        case NODES: return "res/PortugalMaps/" + city + "/nodes_x_y_" + toLower(city) + ".txt";
-        case EDGES: return "res/PortugalMaps/" + city + "/edges_" + toLower(city) + ".txt";
+        case NODES: return "res/Maps/" + city + "/nodes_x_y_" + toLower(city) + ".txt";
+        case EDGES: return "res/Maps/" + city + "/edges_" + toLower(city) + ".txt";
         default: return "";
     }
 }
@@ -94,6 +94,7 @@ void DataImporter::parseEdges() {
     for (int i = 1; i <= stoi(edges[0]) ; ++i) {
         char unused;
         int id1, id2;
+        double weight;
         istringstream ss(edges[i]);
         ss >> unused;
         ss >> id1;
@@ -101,8 +102,12 @@ void DataImporter::parseEdges() {
         ss >> id2;
         ss >> unused;
 
+        if (real_maps)
+            ss >> weight;
+            ss >> unused;
+
         if (real_maps) {
-            graph.addBidirectionalEdge(id1, id2, 1); /* the weight needs to be calculated for each type of road */
+            graph.addBidirectionalEdge(id1, id2, weight); /* the weight needs to be calculated for each type of road */
         }
         else
             graph.addBidirectionalEdge(Place(id1), Place(id2), 1); /* the weight needs to be calculated for each type of road */
@@ -129,7 +134,7 @@ void DataImporter::viewGraph() {
         else {
             graphViewer->addNode(vertex->getInfo().getId(), vertex->getInfo().getX(), vertex->getInfo().getY());
         }
-        graphViewer->setVertexLabel(vertex->getInfo().getId(), std::to_string(vertex->getInfo().getId()));
+        // graphViewer->setVertexLabel(vertex->getInfo().getId(), std::to_string(vertex->getInfo().getId()));
         graphViewer->rearrange();
     }
     for (auto vertex : this->graph.getVertexSet()) {

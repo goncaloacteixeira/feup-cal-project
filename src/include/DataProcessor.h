@@ -139,7 +139,7 @@ public:
      * @brief Calculcates the cost of the path, if a path on tmpPath field.
      * @return cost of the path
      */
-    int pathCost();
+    double pathCost();
 
     /**
      * @brief Cleans the framework

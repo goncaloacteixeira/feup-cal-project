@@ -66,8 +66,8 @@ void DataProcessor::cleanup() {
     this->tmpEdges.clear();
 }
 
-int DataProcessor::pathCost() {
-    int result = 0;
+double DataProcessor::pathCost() {
+    double result = 0;
     for (int i = 0; i < this->tmpPath.size() - 1; i++) {
         Vertex* v1 = this->dataImporter.getGraph()->findVertex(tmpPath[i]);
         Vertex* v2 = this->dataImporter.getGraph()->findVertex(tmpPath[i + 1]);
