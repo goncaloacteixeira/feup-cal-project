@@ -100,27 +100,30 @@ void DataProcessor::wait() {
 }
 
 
-std::vector<int> DataProcessor::sortPoints(int start, int finish, std::vector<Ride> rides, algorithm_t algorithm){
+std::vector<int> DataProcessor::sortPoints(int start, int finish, std::vector<Ride> *rides, algorithm_t algorithm){
     std::vector<int> sortedPoints;
 
     sortedPoints.push_back(start);
     int last_stop = start;
     int next_stop, cost, edges_worked = 0;
-    int current_cost = PLUS_INF;
 
-    while(edges_worked < 2*rides.size() - 1) {
-        for (int i = 0; i < rides.size() - 1; ++i) {
-            if (!rides.at(i).hasStarted()) {
-                cost = this->updateTmpPath(last_stop, rides.at(i).getOrigin(), algorithm);
+
+    while(edges_worked < 2*rides->size()) {
+        int current_cost = PLUS_INF;
+        for (int i = 0; i < rides->size(); ++i) {
+            if (!rides->at(i).hasStarted()) {
+                cost = this->updateTmpPath(last_stop, rides->at(i).getOrigin(), algorithm);
                 if (cost < current_cost) {
                     current_cost = cost;
-                    next_stop = rides.at(i).getOrigin();
+                    next_stop = rides->at(i).getOrigin();
+                    rides->at(i).startRide();
                 }
-            } else if (rides.at(i).hasStarted()) {
-                cost = this->updateTmpPath(last_stop, rides.at(i).getDestiny(), algorithm);
+            } else if (rides->at(i).hasStarted()) {
+                cost = this->updateTmpPath(last_stop, rides->at(i).getDestiny(), algorithm);
                 if (cost  < current_cost) {
                     current_cost = cost;
-                    next_stop = rides.at(i).getDestiny();
+                    next_stop = rides->at(i).getDestiny();
+                    rides->at(i).finishRide();
                 }
             } else {
                 continue;
@@ -136,9 +139,16 @@ std::vector<int> DataProcessor::sortPoints(int start, int finish, std::vector<Ri
 }
 
 void DataProcessor::paintPath(std::vector<int> sortedPoints, algorithm_t algorithm){
+
+
     this->markPoint(sortedPoints[0], START);
-    for(int i = 0; i < sortedPoints.size()-2; ++i){
+    this->computePaths(sortedPoints[0], algorithm);
+    updateTmpPath(sortedPoints[0], sortedPoints[0+1], algorithm);
+    buildPath(sortedPoints[0], sortedPoints[0+1]);
+
+    for(int i = 1; i < sortedPoints.size()-1; ++i){
         this->markPoint(sortedPoints[i], STOP);
+        this->computePaths(sortedPoints[i], algorithm);
         updateTmpPath(sortedPoints[i], sortedPoints[i+1], algorithm);
         buildPath(sortedPoints[i], sortedPoints[i+1]);
     }
@@ -252,7 +262,7 @@ std::vector<int> DataProcessor::completePath(std::vector<int> points, algorithm_
     return path;
 }
 
-std::vector<int> DataProcessor::completePath(int start, int finish, std::vector<Ride> rides, algorithm_t algorithm){
+std::vector<int> DataProcessor::completePath(int start, int finish, std::vector<Ride> *rides, algorithm_t algorithm){
     std::vector<int> sortedPoints= sortPoints(start, finish, rides, algorithm);
     paintPath(sortedPoints, algorithm);
     printPath(sortedPoints);

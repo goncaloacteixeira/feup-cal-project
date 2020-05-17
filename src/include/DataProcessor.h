@@ -115,7 +115,7 @@ public:
      *
      * This method does not require calling DataProcessor::computePaths() before.
      */
-    std::vector<int> sortPoints(int start, int finish, std::vector<Ride> rides, algorithm_t algorithm);
+    std::vector<int> sortPoints(int start, int finish, std::vector<Ride> *rides, algorithm_t algorithm);
 
     /**
      * @brief Method that receives a sortedPath and paints it
@@ -160,7 +160,7 @@ public:
      * This method does not require calling DataProcessor::computePaths() before.
      */
 
-    std::vector<int> completePath(int start, int finish, std::vector<Ride> rides, algorithm_t algorithm);
+    std::vector<int> completePath(int start, int finish, std::vector<Ride> *rides, algorithm_t algorithm);
 
     /**
      * @brief Method to assemble the best path from A to B, marking all stopping points on the way
