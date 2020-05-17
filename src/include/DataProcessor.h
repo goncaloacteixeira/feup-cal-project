@@ -103,7 +103,7 @@ public:
      * @param algorithm
      * @return path cost
      */
-    int updateTmpPath(int source, int destination, algorithm_t algorithm);
+    double updateTmpPath(int source, int destination, algorithm_t algorithm);
 
     /**
      * @brief Method to assemble the best path from A to B, passing on a set of points

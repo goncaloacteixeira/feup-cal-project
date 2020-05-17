@@ -29,7 +29,7 @@ void DataProcessor::computePaths(int source, algorithm_t algorithm) {
     }
 }
 
-int DataProcessor::updateTmpPath(int source, int destination, algorithm_t algorithm) {
+double DataProcessor::updateTmpPath(int source, int destination, algorithm_t algorithm) {
     tmpPath = (algorithm != floydwarshall) ? this->dataImporter.getGraph()->getPath(Place(source), Place(destination)) :
               this->dataImporter.getGraph()->getfloydWarshallPath(Place(source), Place(destination));
 
@@ -106,22 +106,22 @@ std::vector<int> DataProcessor::sortPoints(int start, int finish, std::vector<Ri
     sortedPoints.push_back(start);
     int last_stop = start;
     int next_stop, edges_worked = 0;
-    float cost;
 
     int next_stop_id;
 
     while(edges_worked < 2*rides->size()) {
         float current_cost = PLUS_INF;
+        this->computePaths(last_stop, algorithm);
         for (int i = 0; i < rides->size(); ++i) {
             if (!rides->at(i).hasStarted()) {
-                cost = this->updateTmpPath(last_stop, rides->at(i).getOrigin(), algorithm);
+                int cost = this->updateTmpPath(last_stop, rides->at(i).getOrigin(), algorithm);
                 if (cost < current_cost) {
                     current_cost = cost;
                     next_stop = rides->at(i).getOrigin();
                     next_stop_id = i;
                 }
             } else if (rides->at(i).hasStarted() && !rides->at(i).hasFinished()) {
-                cost = this->updateTmpPath(last_stop, rides->at(i).getDestiny(), algorithm);
+                int cost = this->updateTmpPath(last_stop, rides->at(i).getDestiny(), algorithm);
                 if (cost  < current_cost) {
                     current_cost = cost;
                     next_stop = rides->at(i).getDestiny();
