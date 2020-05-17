@@ -8,7 +8,8 @@ private:
     int origin;       //!< Ride's origin place
     int destiny;      //!< Ride's destiny place
     Person* person;   //!< Person associated with this Ride
-    bool rideStarted; //!< If the Ride has started
+    bool started; //!< If the Ride has started
+    bool finished;    //!< If the Ride has finished
 public:
 
     /**
@@ -38,7 +39,13 @@ public:
      * @brief method to find if a ride has started
      * @return True if the person was picked from ride origin
      */
-    bool hasRideStarted();
+    bool hasStarted();
+
+    /**
+     * @brief method to find if a ride has finished
+     * @return True if the person was picked from ride origin and delivered to ride destiny
+     */
+    bool hasFinished();
 
     /**
      * @brief SET Method for origin
@@ -60,6 +67,10 @@ public:
      */
     void startRide();
 
+    /**
+     * @brief Ends the Ride
+     */
+    void finishRide();
 };
 
 
