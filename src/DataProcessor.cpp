@@ -105,25 +105,27 @@ std::vector<int> DataProcessor::sortPoints(int start, int finish, std::vector<Ri
 
     sortedPoints.push_back(start);
     int last_stop = start;
-    int next_stop, cost, edges_worked = 0;
+    int next_stop, edges_worked = 0;
+    float cost;
 
+    int next_stop_id;
 
     while(edges_worked < 2*rides->size()) {
-        int current_cost = PLUS_INF;
+        float current_cost = PLUS_INF;
         for (int i = 0; i < rides->size(); ++i) {
             if (!rides->at(i).hasStarted()) {
                 cost = this->updateTmpPath(last_stop, rides->at(i).getOrigin(), algorithm);
                 if (cost < current_cost) {
                     current_cost = cost;
                     next_stop = rides->at(i).getOrigin();
-                    rides->at(i).startRide();
+                    next_stop_id = i;
                 }
-            } else if (rides->at(i).hasStarted()) {
+            } else if (rides->at(i).hasStarted() && !rides->at(i).hasFinished()) {
                 cost = this->updateTmpPath(last_stop, rides->at(i).getDestiny(), algorithm);
                 if (cost  < current_cost) {
                     current_cost = cost;
                     next_stop = rides->at(i).getDestiny();
-                    rides->at(i).finishRide();
+                    next_stop_id = i;
                 }
             } else {
                 continue;
@@ -131,6 +133,11 @@ std::vector<int> DataProcessor::sortPoints(int start, int finish, std::vector<Ri
         }
         sortedPoints.push_back(next_stop);
         last_stop = next_stop;
+        if(!rides->at(next_stop_id).hasStarted()){
+            rides->at(next_stop_id).startRide();
+        }else{
+            rides->at(next_stop_id).finishRide();
+        }
         edges_worked++;
     }
 
