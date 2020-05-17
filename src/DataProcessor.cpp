@@ -2,6 +2,7 @@
 // Created by skidr on 07/05/2020.
 //
 
+
 #include "DataProcessor.h"
 
 
@@ -98,6 +99,59 @@ void DataProcessor::wait() {
     getchar();
 }
 
+
+std::vector<int> DataProcessor::sortPoints(int start, int finish, std::vector<Ride> rides, algorithm_t algorithm){
+    std::vector<int> sortedPoints;
+
+    sortedPoints.push_back(start);
+    int last_stop = start;
+    int next_stop, cost, edges_worked = 0;
+    int current_cost = PLUS_INF;
+
+    while(edges_worked < 2*rides.size() - 1) {
+        for (int i = 0; i < rides.size() - 1; ++i) {
+            if (!rides.at(i).hasStarted()) {
+                cost = this->updateTmpPath(last_stop, rides.at(i).getOrigin(), algorithm);
+                if (cost < current_cost) {
+                    current_cost = cost;
+                    next_stop = rides.at(i).getOrigin();
+                }
+            } else if (rides.at(i).hasStarted()) {
+                cost = this->updateTmpPath(last_stop, rides.at(i).getDestiny(), algorithm);
+                if (cost  < current_cost) {
+                    current_cost = cost;
+                    next_stop = rides.at(i).getDestiny();
+                }
+            } else {
+                continue;
+            }
+        }
+        sortedPoints.push_back(next_stop);
+        last_stop = next_stop;
+        edges_worked++;
+    }
+
+    sortedPoints.push_back(finish);
+    return sortedPoints;
+}
+
+void DataProcessor::paintPath(std::vector<int> sortedPoints, algorithm_t algorithm){
+    this->markPoint(sortedPoints[0], START);
+    for(int i = 0; i < sortedPoints.size()-2; ++i){
+        this->markPoint(sortedPoints[i], STOP);
+        updateTmpPath(sortedPoints[i], sortedPoints[i+1], algorithm);
+        buildPath(sortedPoints[i], sortedPoints[i+1]);
+    }
+    this->markPoint(sortedPoints[sortedPoints.size() - 1], END);
+}
+
+void DataProcessor::printPath(std::vector<int> sortedPoints){
+    std::cout << "The path is: ";
+    for (int i = 0; i < sortedPoints.size() - 1; i++)
+        std::cout << std::to_string(sortedPoints[i]) << " -> ";
+    std::cout << std::to_string(sortedPoints[sortedPoints.size() - 1]) << std::endl;
+}
+
 std::vector<int> DataProcessor::completePath(std::vector<int> points) {
     std::cout << "Building path from A to B passing in C with Floyd Warshall's algorithm\n";
 
@@ -189,12 +243,22 @@ std::vector<int> DataProcessor::completePath(std::vector<int> points, algorithm_
     this->markPoint(points[points.size() - 1], END);
 
 
-    std::cout << "The path is: ";
+    printPath(path);
+    /*std::cout << "The path is: ";
     for (int i = 0; i < path.size() - 1; i++)
         std::cout << std::to_string(path[i]) << " -> ";
-    std::cout << std::to_string(path[path.size() - 1]) << std::endl;
+    std::cout << std::to_string(path[path.size() - 1]) << std::endl;*/
 
     return path;
+}
+
+std::vector<int> DataProcessor::completePath(int start, int finish, std::vector<Ride> rides, algorithm_t algorithm){
+    std::vector<int> sortedPoints= sortPoints(start, finish, rides, algorithm);
+    paintPath(sortedPoints, algorithm);
+    printPath(sortedPoints);
+
+    return sortedPoints;
+
 }
 
 std::vector<int> DataProcessor::fastestPath(std::vector<int> points, algorithm_t algorithm) {

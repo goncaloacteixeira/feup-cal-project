@@ -7,6 +7,7 @@
 
 #include "Graph.h"
 #include "DataImporter.h"
+#include "Ride.h"
 
 #define PLUS_INF std::numeric_limits<double>::max()
 #define MINUS_INF std::numeric_limits<double>::min()
@@ -106,6 +107,31 @@ public:
 
     /**
      * @brief Method to assemble the best path from A to B, passing on a set of points
+     * @param start Where the driver initially is
+     * @param finish Where the driver destination is
+     * @param rides Vector containing all the rides. {{START, STOP},{START, STOP},{START, STOP},}
+     * @param algorithm Algorithm to be used
+     * @return returns a vector with the path ordered
+     *
+     * This method does not require calling DataProcessor::computePaths() before.
+     */
+    std::vector<int> sortPoints(int start, int finish, std::vector<Ride> rides, algorithm_t algorithm);
+
+    /**
+     * @brief Method that receives a sortedPath and paints it
+     * @param sortedPath Vector containing all stops sorted;
+     * @param algorithm Algorithm used to draw the path;
+     */
+    void paintPath(std::vector<int> sortedPath, algorithm_t algorithm);
+
+    /**
+     * @brief Method that receives a sortedPath and prints it
+     * @param sortedPath Vector containing all stops sorted;
+     */
+    static void printPath(std::vector<int> sortedPoints);
+
+    /**
+     * @brief Method to assemble the best path from A to B, passing on a set of points
      * @param points Vector containing all the points. { START, STOP, STOP, [...], END }
      * @return returns a vector with the path ordered
      *
@@ -122,6 +148,19 @@ public:
      * This method does not require calling DataProcessor::computePaths() before.
      */
     std::vector<int> completePath(std::vector<int> points, algorithm_t algorithm);
+
+    /**
+     * @brief Method to assemble the best path from A to B and paint said path on the graphViewer
+     * @param start Where the driver initially is
+     * @param finish Where the driver destination is
+     * @param rides Vector containing all the rides. {{START, STOP},{START, STOP},{START, STOP},}
+     * @param algorithm Algorithm to be used
+     * @return returns a vector with the path ordered
+     *
+     * This method does not require calling DataProcessor::computePaths() before.
+     */
+
+    std::vector<int> completePath(int start, int finish, std::vector<Ride> rides, algorithm_t algorithm);
 
     /**
      * @brief Method to assemble the best path from A to B, marking all stopping points on the way
