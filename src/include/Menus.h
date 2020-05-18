@@ -9,11 +9,14 @@
 
 class Menus {
     static void header(std::string tittle);
+    static void option(int number, std::string option);
     Application* application;
 
     std::vector<int> selectPassengers(int capacity);
 public:
     Menus(Application* application);
+
+    int mainMenu();
 
     void addDriver();
     void addPassenger();

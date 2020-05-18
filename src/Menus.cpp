@@ -13,6 +13,10 @@ void Menus::header(std::string tittle) {
     std::cout << "\n";
 }
 
+void Menus::option(int number, std::string option) {
+    std::cout << "[" << number << "] " << option << "\n";
+}
+
 Menus::Menus(Application* application) {
     this->application = application;
 }
@@ -205,3 +209,24 @@ void Menus::exitMenu() {
         }
     }
 }
+
+int Menus::mainMenu() {
+    header("MAIN MENU");
+
+    option(1, "Add Driver");
+    option(2, "Add Passenger");
+    option(3, "Add Vehicle");
+    option(4, "Start Ride");
+    option(0, "Exit");
+
+    std::cout << "Option: ";
+    int option;
+    do {
+        std::string response;
+        std::getline(cin, response); option = std::stoi(response);
+    } while (option < 0 || option > 4);
+
+    return option;
+}
+
+

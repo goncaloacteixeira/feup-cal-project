@@ -20,7 +20,11 @@ void app() {
     application.startRun(112211221, &passengers, dijkstra);
 }
 
-void menus() {
+int main() {
+    /*********************************************************************************
+     *  IMPORTANTE - mudar a working directory do CLion para a raiz do repositório.  *
+     *********************************************************************************/
+
     DataImporter importer(1920, 1080, "Ol");
     DataProcessor processor(importer);
 
@@ -28,15 +32,28 @@ void menus() {
     application.init();
 
     Menus menus(&application);
-    menus.startRide();
-}
 
-int main() {
-    /*********************************************************************************
-     *  IMPORTANTE - mudar a working directory do CLion para a raiz do repositório.  *
-     *********************************************************************************/
+    int option;
 
-    /* descomentar a linha seguinte para ver o exemplo para um grafo de grelha de 16x16 */
-
-    menus();
+    do {
+        option = menus.mainMenu();
+        switch (option) {
+            case 1:
+                menus.addDriver();
+                break;
+            case 2:
+                menus.addPassenger();
+                break;
+            case 3:
+                menus.addVehicle();
+            case 4:
+                menus.startRide();
+                break;
+            case 0:
+                menus.exitMenu();
+                break;
+            default:
+                break;
+        }
+    } while (option != 0);
 }
