@@ -11,9 +11,10 @@ void app() {
     importer.wait();
 
     DataProcessor processor(importer);
-    processor.completePath(std::vector<int> {
-        264, 154, 1241, 555, 5402,
-    }, dijkstra);
+
+    Person person("teste",1,"email");
+    std::vector<Ride> rides = {Ride(154, 1241,&person),Ride(1500, 300,&person),Ride(2400, 231,&person),Ride(1000, 4500,&person)};
+    processor.completePath(264,5402,&rides,dijkstra);
     processor.wait();
 }
 
