@@ -28,7 +28,7 @@ void menus() {
     application.init();
 
     Menus menus(&application);
-    menus.exportData();
+    menus.startRide();
 }
 
 int main() {

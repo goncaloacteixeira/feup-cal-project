@@ -136,3 +136,56 @@ void Menus::exportData() {
 
     header("Data exported successfully!");
 }
+
+void Menus::startRide() {
+    header("START A RIDE");
+
+    std::cout << "Select a driver\n";
+    std::cout << "Driver's VAT:";
+    int vat; std::string response;
+    std::getline(cin, response); vat = std::stoi(response);
+
+    Driver* driver = application->findDriver(vat);
+
+    if (driver == nullptr) {
+        std::cout << "ABORTED - Driver does not exist!\n";
+        return;
+    }
+
+    header("SELECTING PASSENGERS");
+    std::cout << "Do you want to select passengers? (y/n):";
+    std::getline(cin, response);
+    if (response == "y" || response == "Y") {
+        auto passengers = this->selectPassengers(driver->getVehicle().getCapacity() - 1);
+        std::cout << "Starting ride, please stand by ...\n";
+        application->startRun(vat, &passengers, dijkstra);
+    } else {
+        std::cout << "Starting ride, please stand by ...\n";
+        application->startRun(vat, dijkstra);
+    }
+    application->cleanup();
+}
+
+std::vector<int> Menus::selectPassengers(int capacity) {
+    header("SELECT PASSENGERS");
+
+    std::vector<int> passengers;
+
+    int count = 0;
+    while (count < capacity) {
+        std::string response;
+        int vat;
+        std::cout << "Passenger VAT (type 0 when done):";
+        std::getline(cin, response); vat = std::stoi(response);
+
+        if (vat == 0) break;
+
+        if (application->findPassenger(vat) != nullptr) {
+            passengers.push_back(vat);
+            count++;
+        } else {
+            std::cout << "Passenger not found!\n";
+        }
+    }
+    return passengers;
+}

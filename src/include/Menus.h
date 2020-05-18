@@ -10,12 +10,18 @@
 class Menus {
     static void header(std::string tittle);
     Application* application;
+
+    std::vector<int> selectPassengers(int capacity);
 public:
     Menus(Application* application);
 
     void addDriver();
     void addPassenger();
     void addVehicle();
+
+    void startRide();
+
+
 
 
     void exportData();
