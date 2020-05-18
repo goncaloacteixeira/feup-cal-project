@@ -5,19 +5,19 @@
 #include "Application.h"
 
 void app() {
-    DataImporter importer(1920, 1080, "California");
-    importer.parseData();
-    importer.viewGraph();
-    importer.wait();
-
+    DataImporter importer(1920, 1080, "Ol");
     DataProcessor processor(importer);
 
-    Person person("teste",1,"email");
-    std::vector<Ride> rides = {Ride(154, 1241,&person),Ride(1500, 300,&person),Ride(2400, 231,&person),Ride(1000, 4500,&person)};
-    processor.completePath(264,5402,&rides,dijkstra);
-    processor.wait();
-    processor.cleanup();
-    processor.wait();
+    Application application("res/csvFiles/drivers.csv", "res/csvFiles/passengers.csv", "res/csvFiles/cars.csv", &processor);
+    application.init();
+
+    std::vector<int> passengers = {
+            456789876,
+            234234768,
+            234098755,
+    };
+
+    application.startRun(112211221, &passengers, dijkstra);
 }
 
 int main() {

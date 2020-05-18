@@ -18,7 +18,8 @@ void Application::parseData() {
     this->parsePassengers();
 }
 
-void Application::initGraph() {
+void Application::init() {
+    this->parseData();
     this->processor->getDataImporter().parseData();
     this->processor->getDataImporter().viewGraph();
     this->processor->getDataImporter().wait();
@@ -109,7 +110,7 @@ void Application::startRun(int driverVAT, algorithm_t algorithm) {
 
     std::cout << "Starting run for " << driver->getName() << " as driver\n";
 
-    std::vector<int> points = { driver->getOrigin().getId() };
+    std::vector<Ride> rides;
 
     std::srand(time(nullptr));
     for (int i = 0; i < driver->getVehicle().getCapacity() - 1; i++) {
@@ -117,13 +118,10 @@ void Application::startRun(int driverVAT, algorithm_t algorithm) {
 
        std::cout << "Selecting " << this->passengers[j]->getName() << " as passenger\n";
 
-       points.emplace_back(this->passengers[j]->getOrigin().getId());
-       points.emplace_back(this->passengers[j]->getDestiny().getId());
+       rides.emplace_back(Ride(this->passengers[j]->getOrigin().getId(),this->passengers[j]->getDestiny().getId(), this->passengers[j]));
     }
 
-    points.emplace_back(driver->getDestiny().getId());
-
-    this->processor->completePath(points, algorithm);
+    this->processor->completePath(driver->getOrigin().getId(), driver->getDestiny().getId(), &rides, algorithm);
     this->processor->wait();
 
     // TODO - implementar um sistema que tenha em conta as horas de saída dos passageiros.
@@ -136,7 +134,7 @@ void Application::startRun(int driverVAT, std::vector<int> *passengersVAT, algor
 
     std::cout << "Starting run for " << driver->getName() << " as driver\n";
 
-    std::vector<int> points = { driver->getOrigin().getId() };
+    std::vector<Ride> rides;
 
     for (int passVAT : *passengersVAT) {
         auto passenger = this->findPassenger(passVAT);
@@ -145,16 +143,10 @@ void Application::startRun(int driverVAT, std::vector<int> *passengersVAT, algor
 
         std::cout << "Selecting " << passenger->getName() << " as passenger\n";
 
-        points.emplace_back(passenger->getOrigin().getId());
-        points.emplace_back(passenger->getDestiny().getId());
+        rides.emplace_back(Ride(passenger->getOrigin().getId(),passenger->getDestiny().getId(), passenger));
     }
 
-    points.emplace_back(driver->getDestiny().getId());
-
-    if (algorithm != floydwarshall)
-        this->processor->completePath(points, algorithm);
-    else
-        this->processor->completePath(points);
+    this->processor->completePath(driver->getOrigin().getId(), driver->getDestiny().getId(), &rides, algorithm);
     this->processor->wait();
 }
 

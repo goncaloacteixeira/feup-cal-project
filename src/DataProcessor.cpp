@@ -151,6 +151,7 @@ std::vector<int> DataProcessor::sortPoints(int start, int finish, std::vector<Ri
 }
 
 void DataProcessor::paintPath(std::vector<int> sortedPoints, algorithm_t algorithm) {
+    this->computePaths(sortedPoints[0], algorithm);
     updateTmpPath(sortedPoints[0], sortedPoints[0+1], algorithm);
     buildPath(sortedPoints[0], sortedPoints[0+1]);
 
@@ -162,7 +163,6 @@ void DataProcessor::paintPath(std::vector<int> sortedPoints, algorithm_t algorit
     }
     this->markPoint(sortedPoints[sortedPoints.size() - 1], END);
     this->markPoint(sortedPoints[0], START);
-    this->computePaths(sortedPoints[0], algorithm);
 }
 
 void DataProcessor::printPath(std::vector<int> sortedPoints) {
@@ -268,7 +268,7 @@ std::vector<int> DataProcessor::completePath(std::vector<int> points, algorithm_
 }
 
 std::vector<int> DataProcessor::completePath(int start, int finish, std::vector<Ride> *rides, algorithm_t algorithm){
-    std::vector<int> sortedPoints= sortPoints(start, finish, rides, algorithm);
+    std::vector<int> sortedPoints = sortPoints(start, finish, rides, algorithm);
     paintPath(sortedPoints, algorithm);
     printPath(sortedPoints);
 

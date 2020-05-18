@@ -32,6 +32,11 @@ class Application {
     void parsePassengers();     //!< private method to parse passengers data from file
     void parseVehicles();       //!< private method to parse vehicles data from file
 
+    /**
+    * @brief Parses data (call all parsing data methods)
+    */
+    void parseData();
+
     Driver* findDriver(int vat);        //!< private method to find a driver
     Passenger* findPassenger(int vat);  //!< private method to find a passenger
     Vehicle* findVehicle(int id);       //!< private method to find a vehicle
@@ -48,16 +53,11 @@ public:
                 DataProcessor* processor);
 
     /**
-     * @brief Parses data (call all parsing data methods)
-     */
-    void parseData();
-
-    /**
      * @brief Initializing graphs and visualization
      *
      * This is needed to process further data
      */
-    void initGraph();
+    void init();
 
     /**
      * @brief Ride starter for a driver VAT - driverVAT (1)
