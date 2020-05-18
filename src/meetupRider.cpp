@@ -10,7 +10,14 @@ void app() {
 
     Application application("res/csvFiles/drivers.csv", "res/csvFiles/passengers.csv", "res/csvFiles/cars.csv", &processor);
     application.init();
-    application.startRun(112211221, dijkstra);
+
+    std::vector<int> passengers = {
+            456789876,
+            234234768,
+            234098755,
+    };
+
+    application.startRun(112211221, &passengers, dijkstra);
 }
 
 int main() {

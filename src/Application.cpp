@@ -110,8 +110,6 @@ void Application::startRun(int driverVAT, algorithm_t algorithm) {
 
     std::cout << "Starting run for " << driver->getName() << " as driver\n";
 
-    // std::vector<int> points = { driver->getOrigin().getId() };
-
     std::vector<Ride> rides;
 
     std::srand(time(nullptr));
@@ -120,15 +118,8 @@ void Application::startRun(int driverVAT, algorithm_t algorithm) {
 
        std::cout << "Selecting " << this->passengers[j]->getName() << " as passenger\n";
 
-       /*
-       points.emplace_back(this->passengers[j]->getOrigin().getId());
-       points.emplace_back(this->passengers[j]->getDestiny().getId());
-       */
-
        rides.emplace_back(Ride(this->passengers[j]->getOrigin().getId(),this->passengers[j]->getDestiny().getId(), this->passengers[j]));
     }
-
-    // points.emplace_back(driver->getDestiny().getId());
 
     this->processor->completePath(driver->getOrigin().getId(), driver->getDestiny().getId(), &rides, algorithm);
     this->processor->wait();
@@ -143,7 +134,7 @@ void Application::startRun(int driverVAT, std::vector<int> *passengersVAT, algor
 
     std::cout << "Starting run for " << driver->getName() << " as driver\n";
 
-    std::vector<int> points = { driver->getOrigin().getId() };
+    std::vector<Ride> rides;
 
     for (int passVAT : *passengersVAT) {
         auto passenger = this->findPassenger(passVAT);
@@ -152,16 +143,10 @@ void Application::startRun(int driverVAT, std::vector<int> *passengersVAT, algor
 
         std::cout << "Selecting " << passenger->getName() << " as passenger\n";
 
-        points.emplace_back(passenger->getOrigin().getId());
-        points.emplace_back(passenger->getDestiny().getId());
+        rides.emplace_back(Ride(passenger->getOrigin().getId(),passenger->getDestiny().getId(), passenger));
     }
 
-    points.emplace_back(driver->getDestiny().getId());
-
-    if (algorithm != floydwarshall)
-        this->processor->completePath(points, algorithm);
-    else
-        this->processor->completePath(points);
+    this->processor->completePath(driver->getOrigin().getId(), driver->getDestiny().getId(), &rides, algorithm);
     this->processor->wait();
 }
 
