@@ -119,6 +119,7 @@ Graph *DataImporter::getGraph() {
 }
 
 void DataImporter::viewGraph() {
+    graphViewer->defineVertexSize(6);
     graphViewer->createWindow(this->width, this->height);
     graphViewer->defineVertexColor("black");
     graphViewer->defineEdgeColor("black");
@@ -139,7 +140,7 @@ void DataImporter::viewGraph() {
     }
     for (auto vertex : this->graph.getVertexSet()) {
         for (auto edge : vertex->getAdj()) {
-            graphViewer->addEdge(edgeID++, vertex->getInfo().getId(), edge.getDest()->getInfo().getId(), EdgeType::DIRECTED);
+            graphViewer->addEdge(edgeID++, vertex->getInfo().getId(), edge.getDest()->getInfo().getId(), EdgeType::UNDIRECTED);
             // graphViewer->setEdgeLabel(edgeID-1, to_string(edge.getWeight()));
         }
         graphViewer->rearrange();

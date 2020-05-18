@@ -58,8 +58,11 @@ void DataProcessor::buildPath(int source, int destination) {
 }
 
 void DataProcessor::cleanup() {
-    for (auto v : this->getDataImporter().getGraph()->getVertexSet())
+    for (auto v : this->getDataImporter().getGraph()->getVertexSet()) {
         this->dataImporter.getGraphViewer()->clearVertexColor(v->getInfo().getId());
+        this->dataImporter.getGraphViewer()->clearVertexLabel(v->getInfo().getId());
+        this->dataImporter.getGraphViewer()->setVertexSize(v->getInfo().getId(), 7);
+    }
     for (int i = 0; i < tmpEdges.size(); i++)
         this->dataImporter.getGraphViewer()->removeEdge(tmpEdges[i]);
     this->dataImporter.getGraphViewer()->rearrange();
@@ -91,6 +94,8 @@ void DataProcessor::markPoint(int id, point_t point) {
             this->dataImporter.getGraphViewer()->setVertexColor(id, "blue");
             break;
     }
+    this->dataImporter.getGraphViewer()->setVertexSize(id, 10);
+    this->dataImporter.getGraphViewer()->setVertexLabel(id, std::to_string(id));
     this->dataImporter.getGraphViewer()->rearrange();
 }
 
@@ -145,24 +150,22 @@ std::vector<int> DataProcessor::sortPoints(int start, int finish, std::vector<Ri
     return sortedPoints;
 }
 
-void DataProcessor::paintPath(std::vector<int> sortedPoints, algorithm_t algorithm){
-
-
-    this->markPoint(sortedPoints[0], START);
-    this->computePaths(sortedPoints[0], algorithm);
+void DataProcessor::paintPath(std::vector<int> sortedPoints, algorithm_t algorithm) {
     updateTmpPath(sortedPoints[0], sortedPoints[0+1], algorithm);
     buildPath(sortedPoints[0], sortedPoints[0+1]);
 
-    for(int i = 1; i < sortedPoints.size()-1; ++i){
+    for (int i = 1; i < sortedPoints.size() - 1; ++i){
         this->markPoint(sortedPoints[i], STOP);
         this->computePaths(sortedPoints[i], algorithm);
         updateTmpPath(sortedPoints[i], sortedPoints[i+1], algorithm);
         buildPath(sortedPoints[i], sortedPoints[i+1]);
     }
     this->markPoint(sortedPoints[sortedPoints.size() - 1], END);
+    this->markPoint(sortedPoints[0], START);
+    this->computePaths(sortedPoints[0], algorithm);
 }
 
-void DataProcessor::printPath(std::vector<int> sortedPoints){
+void DataProcessor::printPath(std::vector<int> sortedPoints) {
     std::cout << "The path is: ";
     for (int i = 0; i < sortedPoints.size() - 1; i++)
         std::cout << std::to_string(sortedPoints[i]) << " -> ";
@@ -261,11 +264,6 @@ std::vector<int> DataProcessor::completePath(std::vector<int> points, algorithm_
 
 
     printPath(path);
-    /*std::cout << "The path is: ";
-    for (int i = 0; i < path.size() - 1; i++)
-        std::cout << std::to_string(path[i]) << " -> ";
-    std::cout << std::to_string(path[path.size() - 1]) << std::endl;*/
-
     return path;
 }
 

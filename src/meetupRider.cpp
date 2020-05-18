@@ -16,6 +16,8 @@ void app() {
     std::vector<Ride> rides = {Ride(154, 1241,&person),Ride(1500, 300,&person),Ride(2400, 231,&person),Ride(1000, 4500,&person)};
     processor.completePath(264,5402,&rides,dijkstra);
     processor.wait();
+    processor.cleanup();
+    processor.wait();
 }
 
 int main() {
