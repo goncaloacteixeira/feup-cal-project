@@ -4,7 +4,7 @@
 #include "Ride.h"
 
 
-Ride::Ride(int origin, int destiny, Person* person) : rideStarted(false){
+Ride::Ride(int origin, int destiny, Person* person) : started(false), finished(false){
     this->origin = origin;
     this->destiny = destiny;
     this->person = person;
@@ -22,8 +22,12 @@ Person* Ride::getPerson() const{
     return this->person;
 }
 
-bool Ride::hasRideStarted(){
-    return this->rideStarted;
+bool Ride::hasStarted(){
+    return this->started;
+}
+
+bool Ride::hasFinished() {
+    return this->finished;
 }
 
 void Ride::setOrigin(int origin){
@@ -39,5 +43,9 @@ void Ride::setPerson(Person* person){
 }
 
 void Ride::startRide(){
-    this->rideStarted = true;
+    this->started = true;
+}
+
+void Ride::finishRide() {
+    this->finished = true;
 }
