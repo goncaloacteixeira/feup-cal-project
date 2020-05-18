@@ -21,9 +21,7 @@ public:
 
     void startRide();
 
-
-
-
+    void exitMenu();
     void exportData();
 
 };

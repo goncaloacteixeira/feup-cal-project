@@ -189,3 +189,19 @@ std::vector<int> Menus::selectPassengers(int capacity) {
     }
     return passengers;
 }
+
+void Menus::exitMenu() {
+    header("EXIT MENU");
+    std::string response;
+    while (true) {
+        std::cout << "Save data? (y/n)";
+        std::getline(cin, response);
+        if (response == "y" || response == "Y") {
+            this->exportData();
+            break;
+        }
+        else if (response == "N" || response == "n") {
+            break;
+        }
+    }
+}
