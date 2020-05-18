@@ -144,6 +144,8 @@ void Menus::exportData() {
 void Menus::startRide() {
     header("START A RIDE");
 
+    this->viewDrivers();
+
     std::cout << "Select a driver\n";
     std::cout << "Driver's VAT:";
     int vat; std::string response;
@@ -172,6 +174,7 @@ void Menus::startRide() {
 
 std::vector<int> Menus::selectPassengers(int capacity) {
     header("SELECT PASSENGERS");
+    this->viewPassengers();
 
     std::vector<int> passengers;
 
@@ -227,6 +230,34 @@ int Menus::mainMenu() {
     } while (option < 0 || option > 4);
 
     return option;
+}
+
+void Menus::viewDrivers() {
+    if (application->drivers.empty()) {
+        std::cout << "No drivers to show\n";
+        return;
+    }
+
+    VariadicTable<std::string, int, std::string, int, int, int> vt({"Name", "VAT", "e-mail", "Vehicle", "Origin", "Destiny"});
+
+    for (auto driver : application->drivers)
+        vt.addRow(driver->getName(), driver->getVAT(), driver->getEmail(), driver->getVehicle().getId(), driver->getOrigin().getId(), driver->getDestiny().getId());
+
+    vt.print(std::cout);
+}
+
+void Menus::viewPassengers() {
+    if (application->passengers.empty()) {
+        std::cout << "No passengers to show\n";
+        return;
+    }
+
+    VariadicTable<std::string, int, std::string, int, int> vt({"Name", "VAT", "e-mail", "Origin", "Destiny"});
+
+    for (auto passenger : application->passengers)
+        vt.addRow(passenger->getName(), passenger->getVAT(), passenger->getEmail(), passenger->getOrigin().getId(), passenger->getDestiny().getId());
+
+    vt.print(std::cout);
 }
 
 

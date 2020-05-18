@@ -6,6 +6,7 @@
 #define MEETUP_RIDER_MENUS_H
 
 #include "Application.h"
+#include "VariadicTable/VariadicTable.h"
 
 class Menus {
     static void header(std::string tittle);
@@ -13,6 +14,9 @@ class Menus {
     Application* application;
 
     std::vector<int> selectPassengers(int capacity);
+
+    void viewDrivers();
+    void viewPassengers();
 public:
     Menus(Application* application);
 
