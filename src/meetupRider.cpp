@@ -2,7 +2,7 @@
 // Created by skidr on 06/05/2020.
 //
 
-#include "Application.h"
+#include "Menus.h"
 
 void app() {
     DataImporter importer(1920, 1080, "Ol");
@@ -20,6 +20,17 @@ void app() {
     application.startRun(112211221, &passengers, dijkstra);
 }
 
+void menus() {
+    DataImporter importer(1920, 1080, "Ol");
+    DataProcessor processor(importer);
+
+    Application application("res/csvFiles/drivers.csv", "res/csvFiles/passengers.csv", "res/csvFiles/cars.csv", &processor);
+    application.init();
+
+    Menus menus(&application);
+    menus.exportData();
+}
+
 int main() {
     /*********************************************************************************
      *  IMPORTANTE - mudar a working directory do CLion para a raiz do repositório.  *
@@ -27,5 +38,5 @@ int main() {
 
     /* descomentar a linha seguinte para ver o exemplo para um grafo de grelha de 16x16 */
 
-    app();
+    menus();
 }

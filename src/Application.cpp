@@ -165,6 +165,11 @@ bool Application::addPassenger(Passenger *passenger) {
 bool Application::addDriver(Driver *driver) {
     if (this->findDriver(driver->getVAT()) != nullptr)
         return false;
+    if (this->processor->getDataImporter().getGraph()->findVertex(driver->getOrigin()) == nullptr)
+        return false;
+    if (this->processor->getDataImporter().getGraph()->findVertex(driver->getDestiny()) == nullptr)
+        return false;
+
     this->drivers.push_back(driver);
     return true;
 }
