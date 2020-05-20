@@ -5,7 +5,7 @@
 #include "Menus.h"
 
 void app() {
-    DataImporter importer(1920, 1080, "Ol");
+    DataImporter importer(1920, 1080, "Porto");
     DataProcessor processor(importer);
 
     Application application("res/csvFiles/drivers.csv", "res/csvFiles/passengers.csv", "res/csvFiles/cars.csv", &processor);
