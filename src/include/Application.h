@@ -40,6 +40,8 @@ class Application {
     Driver* findDriver(int vat);        //!< private method to find a driver
     Passenger* findPassenger(int vat);  //!< private method to find a passenger
     Vehicle* findVehicle(int id);       //!< private method to find a vehicle
+
+    friend class Menus;
 public:
     /**
      * @brief Application constructor
